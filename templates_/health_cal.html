@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        food_list
+    </title>
+<body>
+<div class="container">
+    <h1>FooDoc Test Server</h1>
+    <h2>식습관 분석</h2>
+    <table border="1" bordercolor="blue" width="600" height="300" align="center">
+        <tr align="center" bgcolor="skybule">
+            <td>구분</td>
+            <td>energy</td>
+            <td>protein</td>
+            <td>water</td>
+            <td>tansu</td>
+        </tr>
+        <tr>
+            <td> 내가 먹은 총 영양소 </td>
+            <td>{{ health_list[0] }}</td>
+            <td>{{ health_list[1] }}</td>
+            <td>{{ health_list[2] }}</td>
+            <td>{{ health_list[3] }}</td>
+        </tr>
+        <tr>
+            <td> 권장 섭취 영양소 </td>
+            <td>{{ standard[0] }}</td>
+            <td>{{ standard[1] }}</td>
+            <td>{{ standard[2] }}</td>
+            <td>{{ standard[3] }}</td>
+        </tr>
+        <tr>
+            <td> 영양소 분석 </td>
+            {% if standard[0] - health_list[0] > 0 %}
+            <td>{{ standard[0] - health_list[0] }} 만큼 덜 섭취했습니다</td>
+            {% elif standard[0] - health_list[0] < 0 %}
+            <td>{{ -(standard[0] - health_list[0]) }} 만큼 더 섭취했습니다</td>
+            {% endif %}
+
+            {% if standard[1] - health_list[1] > 0 %}
+            <td>{{ standard[1] - health_list[1] }} 만큼 덜 섭취했습니다</td>
+            {% elif standard[1] - health_list[1] < 0 %}
+            <td>{{ -(standard[1] - health_list[1]) }} 만큼 더 섭취했습니다</td>
+            {% endif %}
+
+            {% if standard[2] - health_list[2] > 0 %}
+            <td>{{ standard[2] - health_list[2] }} 만큼 덜 섭취했습니다</td>
+            {% elif standard[2] - health_list[2] < 0 %}
+            <td>{{ -(standard[2] - health_list[2]) }} 만큼 더 섭취했습니다</td>
+            {% endif %}
+
+            {% if standard[3] - health_list[3] > 0 %}
+            <td>{{ standard[3] - health_list[3] }} 만큼 덜 섭취했습니다</td>
+            {% elif standard[3] - health_list[3] < 0 %}
+            <td>{{ -(standard[3] - health_list[3]) }} 만큼 더 섭취했습니다</td>
+            {% endif %}
+
+        </tr>
+    </table><br>
+
+    <!--        <div>-->
+
+    <!--            <p>{{label}} {{probability}}</p>-->
+
+    <!--        </div>-->
+
+
+    <form action="/main" enctype="multipart/form-data">
+        <input type="submit" value="메인 페이지 이동">
+    </form><br><br>
+    <!--    <form method="post" action="/upload" enctype="multipart/form-data">-->
+    <!--        <input type="file" name="file">-->
+    <!--        <input type="submit" value="submit">-->
+    <!--    </form>-->
+</div>
+</body>
+</head>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        home
+    </title>
+<body>
+<div class="container">
+    <h1>FooDoc Test Server</h1>
+    {% if name %}
+    <h2>{{ name }},{{ user_id }}님 환영합니다</h2>
+    {% endif %}
+    <h2>image upload</h2>
+<!--    {% if filename %}-->
+<!--    <div>-->
+<!--        <img src="{{filename}}">-->
+<!--    </div>-->
+
+<!--    {% endif %}-->
+    <form method="post" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="submit">
+    </form><br><br>
+
+    <form method="get" action="/eat_list" enctype="multipart/form-data">
+        <input type="submit" value="식단 목록">
+    </form>
+
+    <form method="get" action="/cal" enctype="multipart/form-data">
+        <input type="submit" value="식습관 분석">
+    </form>
+
+    <form method="get" action="/recommend" enctype="multipart/form-data">
+        <input type="submit" value="영양제 추천">
+    </form>
+</div>
+</body>
+</head>

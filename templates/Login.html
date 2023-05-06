@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Orangetasteboy">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="../static/assets/css/Login.css">
+</head>
+<body>
+<div id="container">
+    <div id=""></div>
+    <header>
+        <nav>
+        </nav>
+    </header>
+    <div id="contents">
+        <div id="login">
+            <div id="log_left"></div>
+            <div id="log_right"></div>
+            <div id="log_up"></div>
+
+            <div id="log_cen">
+                <div id="title">
+                    <h1>LOGIN</h1>
+                </div>
+                <div id="create">
+                    <div id="c_left">
+                        <h4>신규 사용자이신가요?</h4>
+                    </div>
+                    <div id="c_right">
+                        <form action="/join" enctype="multipart/form-data">
+                            <input type="submit" value="회원가입">
+                        </form>
+                    </div>
+                </div>
+
+                <div id="logo">
+                    <img src="../static/assets/img/logo2.png" alt="FooDoc Logo2" width="28%">
+                </div>
+                <form method="post" action="/logIn_process" enctype="multipart/form-data">
+                    <div id="id">
+
+                        <h3>ID</h3>
+
+                        <input type="text" name="user_id">
+
+                    </div>
+                    <br>
+                    <div id="password">
+                        <h3>PASSWORD</h3>
+
+                        <input type="password" name="pw">
+
+                    </div>
+                    <br><br>
+                    <div id="ok">
+
+                        <input type="submit" value="LOGIN">
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+</div>
+</body>
+</html>

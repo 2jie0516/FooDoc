@@ -1,0 +1,222 @@
+[
+    {
+        "Unnamed: 0":0,
+        "date":"2023-03-08",
+        "foodName":"피자",
+        "energy":233,
+        "water":47.7,
+        "protein":11.3,
+        "fat":7.3,
+        "tansuhwamul":30.4,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":1,
+        "date":"2023-03-08",
+        "foodName":"피자",
+        "energy":233,
+        "water":47.7,
+        "protein":11.3,
+        "fat":7.3,
+        "tansuhwamul":30.4,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":2,
+        "date":"2023-03-08",
+        "foodName":"피자",
+        "energy":233,
+        "water":47.7,
+        "protein":11.3,
+        "fat":7.3,
+        "tansuhwamul":30.4,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":3,
+        "date":"2023-03-09",
+        "foodName":"김밥",
+        "energy":158,
+        "water":63,
+        "protein":3.6,
+        "fat":3.2,
+        "tansuhwamul":28.8,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":4,
+        "date":"2023-03-09",
+        "foodName":"김밥",
+        "energy":158,
+        "water":63,
+        "protein":3.6,
+        "fat":3.2,
+        "tansuhwamul":28.8,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":5,
+        "date":"2023-03-09",
+        "foodName":"닭가슴살",
+        "energy":127,
+        "water":70.4,
+        "protein":28.09,
+        "fat":0.93,
+        "tansuhwamul":0,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":6,
+        "date":"2023-03-09",
+        "foodName":"떡볶이",
+        "energy":151,
+        "water":62.9,
+        "protein":3.8,
+        "fat":1.7,
+        "tansuhwamul":30.2,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":7,
+        "date":"2023-03-09",
+        "foodName":"샐러드",
+        "energy":153,
+        "water":73.42,
+        "protein":0.95,
+        "fat":9.91,
+        "tansuhwamul":14.89,
+        "sugar":12.19
+    },
+    {
+        "Unnamed: 0":8,
+        "date":"2023-03-09",
+        "foodName":"김밥",
+        "energy":158,
+        "water":63,
+        "protein":3.6,
+        "fat":3.2,
+        "tansuhwamul":28.8,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":9,
+        "date":"2023-03-09",
+        "foodName":"김밥",
+        "energy":158,
+        "water":63,
+        "protein":3.6,
+        "fat":3.2,
+        "tansuhwamul":28.8,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":10,
+        "date":"2023-03-09",
+        "foodName":"피자",
+        "energy":233,
+        "water":47.7,
+        "protein":11.3,
+        "fat":7.3,
+        "tansuhwamul":30.4,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":11,
+        "date":"2023-03-22",
+        "foodName":"김밥",
+        "energy":158,
+        "water":63,
+        "protein":3.6,
+        "fat":3.2,
+        "tansuhwamul":28.8,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":12,
+        "date":"2023-03-22",
+        "foodName":"김밥",
+        "energy":158,
+        "water":63,
+        "protein":3.6,
+        "fat":3.2,
+        "tansuhwamul":28.8,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":13,
+        "date":"2023-03-22",
+        "foodName":"닭가슴살",
+        "energy":127,
+        "water":70.4,
+        "protein":28.09,
+        "fat":0.93,
+        "tansuhwamul":0,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":14,
+        "date":"2023-03-22",
+        "foodName":"떡볶이",
+        "energy":151,
+        "water":62.9,
+        "protein":3.8,
+        "fat":1.7,
+        "tansuhwamul":30.2,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":15,
+        "date":"2023-03-22",
+        "foodName":"샐러드",
+        "energy":153,
+        "water":73.42,
+        "protein":0.95,
+        "fat":9.91,
+        "tansuhwamul":14.89,
+        "sugar":12.19
+    },
+    {
+        "Unnamed: 0":16,
+        "date":"2023-03-22",
+        "foodName":"김밥",
+        "energy":158,
+        "water":63,
+        "protein":3.6,
+        "fat":3.2,
+        "tansuhwamul":28.8,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":17,
+        "date":"2023-03-22",
+        "foodName":"김밥",
+        "energy":158,
+        "water":63,
+        "protein":3.6,
+        "fat":3.2,
+        "tansuhwamul":28.8,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":18,
+        "date":"2023-03-22",
+        "foodName":"피자",
+        "energy":233,
+        "water":47.7,
+        "protein":11.3,
+        "fat":7.3,
+        "tansuhwamul":30.4,
+        "sugar":0
+    },
+    {
+        "Unnamed: 0":19,
+        "date":"2023-03-22",
+        "foodName":"피자",
+        "energy":233,
+        "water":47.7,
+        "protein":11.3,
+        "fat":7.3,
+        "tansuhwamul":30.4,
+        "sugar":0
+    }
+]

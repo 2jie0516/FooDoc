@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        food_list
+    </title>
+</head>
+<body>
+<div class="container">
+    <h1>FooDoc Test Server</h1>
+    <h2>Food Info</h2>
+    {% if food_list %}
+    <h3>식단 등록이 완료되었습니다.</h3>
+<!--    <div>-->
+<!--        {{ food_list[0] }} {{ food_list[1] }} {{ food_list[2] }} {{ food_list[3] }}-->
+<!--    </div>-->
+    <table border="1" bordercolor="blue" width="600" height="300" align="center">
+        <tr align="center" bgcolor="skybule">
+            <td>food name</td>
+            <td>energy</td>
+            <td>protein</td>
+            <td>fat</td>
+            <td>water</td>
+            <td>tansu</td>
+            <td>sugar</td>
+        </tr>
+        <tr>
+            <td>{{ food_list[0] }}</td>
+            <td>{{ food_list[1] }}</td>
+            <td>{{ food_list[2] }}</td>
+            <td>{{ food_list[3] }}</td>
+            <td>{{ food_list[4] }}</td>
+            <td>{{ food_list[5] }}</td>
+            <td>{{ food_list[6] }}</td>
+        </tr>
+    </table><br>
+
+    <!--        <div>-->
+
+    <!--            <p>{{label}} {{probability}}</p>-->
+
+    <!--        </div>-->
+    <form method="get" action="/eat_list" enctype="multipart/form-data">
+        <input type="submit" value="식단 목록 보기">
+    </form><br><br>
+    {% endif %}
+
+
+    <!--    <form method="post" action="/upload" enctype="multipart/form-data">-->
+    <!--        <input type="file" name="file">-->
+    <!--        <input type="submit" value="submit">-->
+    <!--    </form>-->
+</div>
+<form method="get" action="/main" enctype="multipart/form-data">
+        <input type="submit" value="메인 페이지 이동">
+    </form><br><br>
+
+</body>

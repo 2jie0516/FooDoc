@@ -1,0 +1,31 @@
+
+/****************************** INITIALIZE ******************************/
+/* Layout */
+html, body {background-color: #fff; color: #000;}
+.not_scroll {position: fixed; overflow: hidden; width: 100%; height: 100%}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; } 
+::-webkit-scrollbar-thumb { background-color: #bcbcbc; border-radius: 10px; background-clip: padding-box; border: 2px solid transparent; } 
+::-webkit-scrollbar-track { background-color: none; border-radius: 10px; box-shadow: inset 0px 0px 5px white; } 
+
+/****************************** UI KIT ******************************/
+/* Dim Layer */
+.dim_07 {background: rgba(0, 0, 0, 0.7);}
+.dim_05 {background: rgba(0, 0, 0, 0.5);}
+.dim_03 {background: rgba(0, 0, 0, 0.3);}
+.dim_01 {background: rgba(0, 0, 0, 0.1);}
+
+/* Button */
+.btn-primary {position: relative; display: inline-flex; justify-content: center; align-items: center; width: 240px; height: 54px; border: 1px solid #a0a0a0; border-radius: 28px; font-size: 20px; font-weight: 600; line-height: 1.6; text-align: center; color: #fff; transition: background-color 0.35s, border-color 0.35s, color 0.35s;}
+.btn-primary::after {content: ""; position: absolute; top: 50%; right: 20px; display: inline-block; width: 10px; height: 10px; border-right: 1px solid white; border-bottom: 1px solid white; transform: translateY(-50%) rotate(-45deg); transition: border-color 0.35s;}
+.btn-primary:hover {background-color: #fff; color: #000;}
+.btn-primary:hover::after {border-color: #000;}
+
+.btn-secondary {position: relative; display: inline-flex; justify-content: center; align-items: center; width: 180px; height: 54px; border: 1px solid #a0a0a0; border-radius: 28px; font-size: 20px; font-weight: 600; line-height: 1.6; text-align: center; color: #000; transition: background-color 0.35s, border-color 0.35s, color 0.35s;}
+.btn-secondary:hover {background-color: #000; color: #fff;}
+
+@media screen and (max-width: 720px) {
+    .btn-primary {width: 66.66vw; height: 15vw; font-size: 5.55vw; border-radius: 7.5vw;}
+    .btn-secondary {width: 50vw; height: 15vw; font-size: 5.55vw; border-radius: 7.5vw; line-height: 1.6;}
+}

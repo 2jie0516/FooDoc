@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+/* Layout Init */
+* { box-sizing: border-box; } 
+html, body { width: 100%; min-height: 100%; } 
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, button { margin: 0; padding: 0 } 
+
+/* Border */
+fieldset, img { border: 0 none } 
+textarea:focus { outline: none; } 
+button:focus { outline: none; } 
+input:focus { outline: none; } 
+
+/* List Style */
+dl, ul, ol, menu, li { list-style: none } 
+
+/* Fonts Init */
+body, th, td, input, select, textarea, button { } 
+a { color: inherit; text-decoration: none; cursor: pointer; font-size: inherit; } 
+a:hover { text-decoration: none; color: inherit; } 
+a:active { background-color: transparent; } 
+a:focus, select:focus { outline: none; } 
+button { color: inherit; text-decoration: none; cursor: pointer; font-size: inherit; } 
+button:hover { text-decoration: none; color: inherit; } 
+button:active { background-color: transparent; } 
+html, body, header, footer, a, h1, h2, h3, h4, h5, h6, div, nav, ul, ol, table, tr, td, li, article, section, p, button, input, textarea, select, span, pre, i { color: inherit; } 
+
+/* Fonts Style */
+address, caption, cite, code, dfn, em, var { font-style: normal; font-weight: normal } 
+
+/* Images */
+img { max-width: 100%; vertical-align: bottom; } 
+
+/* Components */
+/* input { -webkit-appearance: none; -webkit-border-radius: 0; } */
+input::placeholder { color: #bdbdbd; } 
+input:focus { outline: none; } 
+button { background: transparent; border: none; outline: none; border: none; } 
+select { border: none; background: transparent; color: #fff; } 

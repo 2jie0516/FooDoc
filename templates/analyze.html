@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Orangetasteboy">
+    <title>과거 식단 조회 및 분석</title>
+
+    <link rel="stylesheet" href="../static/assets/fonts/fontawesome-free-5.15.4-web/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../static/assets/css/reset.css">
+    <link rel="stylesheet" href="../static/assets/css/fonts.css">
+    <link rel="stylesheet" href="../static/assets/css/style.css">
+</head>
+<body>
+    <div id="root">
+        <header>
+            <div class="header container">
+                <div id="btn-menu" class="btn-menu">
+                    <img src="../static/assets/img/menu_white_48dp.svg" alt="">
+                </div>
+                <div class="logo">
+                    <img src="../static/assets/img/logo.png" alt="">
+                </div>
+            </div>
+        </header>
+
+        <div id="layer" class=""></div>
+
+        <nav id="gnb" class="">
+            <button type="button" id="btn-close_menu">
+                <img src="../static/assets/img/close_white_24dp.svg" alt="">
+            </button>
+            <ul>
+                <li class="sub_title">
+                    <h4>사용자 기능</h4>
+                </li>
+                <li>
+                    <span><a href="index.html">홈</a></span>
+                </li>
+                <li>
+                    <span><a href="analyze.html">과거 식단 조회 및 분석</a></span>
+                </li>
+                <li class="sub_title">
+                    <h4>식단 추가</h4>
+                </li>
+                <li>
+                    <span><a href="pic_upload.html">오늘 먹은 식단 추가하기</a></span>
+                </li>
+                <li class="sub_title">
+                    <h4>개인정보 관리</h4>
+                </li>
+                <li>
+                    <span><a href="info_modify.html">개인정보 변경</a></span>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="section-item container">
+                <div class="section-item-title">
+                    <span>과거 식단 조회</span>
+                </div>
+                <div class="section-item-content white-bg-box">
+                    <div class="table-wrapper">
+                        <table>
+                            <colgroup>
+                                <col width="30%">
+                                <col width="30%">
+                                <col width="40%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>섭취일</th>
+                                    <th>음식면</th>
+                                    <th>탄/단/지</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>3/20</td>
+                                    <td>떡볶이</td>
+                                    <td>00/00/00</td>
+                                </tr>
+                                <tr>
+                                    <td>3/20</td>
+                                    <td>떡볶이</td>
+                                    <td>00/00/00</td>
+                                </tr>
+                                <tr>
+                                    <td>3/20</td>
+                                    <td>떡볶이</td>
+                                    <td>00/00/00</td>
+                                </tr>
+                                <tr>
+                                    <td>3/20</td>
+                                    <td>떡볶이</td>
+                                    <td>00/00/00</td>
+                                </tr>
+                                <tr>
+                                    <td>3/20</td>
+                                    <td>떡볶이</td>
+                                    <td>00/00/00</td>
+                                </tr>
+                                <tr>
+                                    <td>3/20</td>
+                                    <td>떡볶이</td>
+                                    <td>00/00/00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="table-pagination">
+                            <span class="pagi-nav pagi-nav-left"><a><img src="../static/assets/img/chevron-left-regular-24.png" alt=""></a></span>
+                            <ul>
+                                <li><span><a class="active">1</a></span></li>
+                                <li><span><a>2</a></span></li>
+                                <li><span><a>3</a></span></li>
+                                <li><span><a>4</a></span></li>
+                            </ul>
+                            <span class="pagi-nav pagi-nav-right"><a><img src="../static/assets/img/chevron-right-regular-24.png" alt=""></a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-item container">
+                <div class="section-item-title">
+                    <span>일주일 칼로리 섭취량</span>
+                </div>
+                <div class="section-item-content white-bg-box">
+                    <div class="chart-canvas">
+                        <canvas id="chart_01"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-item container">
+                <div class="section-item-title">
+                    <span>일주일 부족 & 과잉 영양소 표시</span>
+                </div>
+                <div class="section-item-content white-bg-box">
+                    <div class="item-list grid-2">
+                        <div class="item">
+                            <span class="data-nth_1">비타민 A</span>
+                            <span class="data-nth_2"><b class="color-red">69</b>mg / 50mg</span>
+                        </div>
+                        <div class="item">
+                            <span class="data-nth_1">비타민 B</span>
+                            <span class="data-nth_2"><b class="color-blue">33</b>mg / 50mg</span>
+                        </div>
+                        <div class="item">
+                            <span class="data-nth_1">비타민 C</span>
+                            <span class="data-nth_2">00mg / 50mg</span>
+                        </div>
+                        <div class="item">
+                            <span class="data-nth_1">비타민 D</span>
+                            <span class="data-nth_2">00mg / 50mg</span>
+                        </div>
+                        <div class="item">
+                            <span class="data-nth_1">탄수화물</span>
+                            <span class="data-nth_2">00mg / 50mg</span>
+                        </div>
+                        <div class="item">
+                            <span class="data-nth_1">단백질</span>
+                            <span class="data-nth_2">00mg / 50mg</span>
+                        </div>
+                        <div class="item">
+                            <span class="data-nth_1">지방</span>
+                            <span class="data-nth_2">00mg / 50mg</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-item container">
+                <div class="section-item-title">
+                    <span>일주일 부족 & 과잉 영양소 표시</span>
+                </div>
+                <div class="section-item-content white-bg-box">
+                    <div class="text-wrapper">
+                        <p><b>비타민 A</b>
+
+                            식욕부진, 단기 기억력 감소, 근육 무력증, 심장 비대, 각기병, 만성변비, 신경 기능 저하, 지루성 피부염, 구순염, 두통
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-item container">
+                <div class="section-item-title">
+                    <span>나의 과잉 영양소</span>
+                </div>
+                <div class="section-item-content white-bg-box">
+                    <div class="text-wrapper">
+                        <p><b>비타민 B</b>
+
+                            오심, 현기증, 무력감, 가려움증, 두통, 탈모증, 피부 건조, 뼈관절 통증
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-item container">
+                <div class="section-item-title">
+                    <span>이런 음식은 어떠세요?</span>
+                </div>
+                <div class="section-item-content">
+                    <p class="recommend-txt">
+                        <span>AI가 당신의 식단을 분석해서 추천드려요!</span><br>
+                        <em>단백질</em> 섭취가 필요한 당신을 위한 식단
+                    </p>
+                    <div class="image-slide-container">
+                        <div class="slide-wrapper">
+                            <div class="slide-item">
+                                <span class="item-img">
+                                    <img src="../static/assets/img/sp1.png" alt="">
+                                </span>
+                                <span class="item-txt">닭가슴살</span>
+                            </div>
+                            <div class="slide-item">
+                                <span class="item-img">
+                                    <img src="../static/assets/img/sp2.jpg" alt="">
+                                </span>
+                                <span class="item-txt">두부조림</span>
+                            </div>
+                            <div class="slide-item">
+                                <span class="item-img">
+                                    <img src="../static/assets/img/sp3.jpg" alt="">
+                                </span>
+                                <span class="item-txt">고등어구이</span>
+                            </div>
+                            <div class="slide-item">
+                                <span class="item-img">
+                                    <img src="../static/assets/img/sp1.png" alt="">
+                                </span>
+                                <span class="item-txt">닭가슴살</span>
+                            </div>
+                            <div class="slide-item">
+                                <span class="item-img">
+                                    <img src="../static/assets/img/sp2.jpg" alt="">
+                                </span>
+                                <span class="item-txt">두부조림</span>
+                            </div>
+                            <div class="slide-item">
+                                <span class="item-img">
+                                    <img src="../static/assets/img/sp3.jpg" alt="">
+                                </span>
+                                <span class="item-txt">고등어구이</span>
+                            </div>
+                            <div class="slide-item">
+                                <span class="item-img">
+                                    <img src="../static/assets/img/sp1.png" alt="">
+                                </span>
+                                <span class="item-txt">닭가슴살</span>
+                            </div>
+                            <div class="slide-item">
+                                <span class="item-img">
+                                    <img src="../static/assets/img/sp2.jpg" alt="">
+                                </span>
+                                <span class="item-txt">두부조림</span>
+                            </div>
+                            <div class="slide-item">
+                                <span class="item-img">
+                                    <img src="../static/assets/img/sp3.jpg" alt="">
+                                </span>
+                                <span class="item-txt">고등어구이</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../static/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="../static/assets/js/main.js"></script>
+    <script>
+        //To register it globally to all charts
+        Chart.register(ChartDataLabels);
+
+        const ctx1 = document.getElementById('chart_01');
+        const basePoint = 30;
+      
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['비타민A', '비타민B', '비타민C', '비타민D', '탄수화물', '단백질', '지방'],
+                datasets: [{
+                    label: false,
+                    data: [80, 66, 45, 30, 77, 29, 33],
+                    backgroundColor: ['#77933C'],
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            font: {
+                                size: 9,
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false,
+                        },
+                        beginAtZero: true,
+                        min: 0,
+                        max: 100,
+                    }
+                },
+                
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    datalabels: {
+                        anchor: "end",
+                        align: "top",
+                        color: function(context) {
+                            var value = context.dataset.data[context.dataIndex];
+
+                            return (
+                                value < basePoint ? "#ff0000" : 
+                                value > basePoint ? "#0054FF" : 
+                                "#028f00"
+                            );
+                        },
+                        font: {
+                            size: 10,
+                            weight: "bold",
+                        },
+                        offset: 2,
+                        formatter: function(value, context) {
+                            var value = context.dataset.data[context.dataIndex];
+                            var glyph = value < basePoint ? "▲" : value > basePoint ? "▼" : "■";
+
+                            return glyph + " " + Math.round(value);
+                        },
+                    }
+                },
+
+                // Core options
+                aspectRatio: 5 / 3,
+                layout: {
+                    padding: {
+                        top: 32,
+                        right: 24,
+                        bottom: 8,
+                        left: 0
+                    }
+                },
+                elements: {
+                    line: {
+                        fill: false,
+                        tension: 0.4
+                    }
+                },
+            }
+        });
+    </script>
+</body>
+</html>

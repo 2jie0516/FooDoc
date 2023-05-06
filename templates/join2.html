@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Orangetasteboy">
+    <title>회원가입</title>
+
+    <link rel="stylesheet" href="../static/assets/css/Join2.css">
+</head>
+<body>
+<div id="container">
+    <div id=""></div>
+    <header>
+        <nav>
+        </nav>
+    </header>
+    <div id="contents">
+        <div id="login">
+            <div id="log_left"></div>
+            <div id="log_right"></div>
+            <div id="log_up"></div>
+
+            <div id="log_cen">
+                <div class="wrapper">
+                        <form method="post" action="/join_process2" enctype="multipart/form-data">
+                        <div class="title"><h1>계정 만들기</h1></div>
+                        <br><br>
+
+                        <div id="subj_gender"><h2>&nbsp&nbsp&nbsp&nbsp&nbsp성별</h2></div><br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="man" type="radio" name="gender" value="1">
+                        <label for ="man"> <span></span>남성</label>
+                        <br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="woman" type="radio" name="gender" value="0">
+                        <label for ="woman"> <span></span>여성</label>
+                        <br><br>
+                        <div><h2>&nbsp&nbsp&nbsp&nbsp&nbsp나이</h2></div><br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="age" type="text" name="age">
+                        </label>
+                        <br>
+                        <div id="subj_property"><h2>&nbsp&nbsp&nbsp&nbsp&nbsp나의 관심 분야</h2></div>
+                        <h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp고객님의 관심 분야에 맞추어 영상을 추천해드립니다.</h5><br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="high" type="checkbox" name="high" value="1">
+                        <label for ="high"> <span></span>고혈압</label>
+                        <br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="diabetes" type="checkbox" name="diabetes" value="2">
+                        <label for ="diabetes"> <span></span>당뇨</label>
+                        <br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="obe" type="checkbox" name="obe" value="3">
+                        <label for ="obe"> <span></span>비만</label>
+                        <br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="fitness" type="checkbox" name="fitness" value="4">
+                        <label for ="fitness"> <span></span>운동</label>
+                        <br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="pregnant" type="checkbox" name="pregnant" value="5">
+                        <label for ="pregnant"> <span></span>임산부</label>
+                        <br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id="none" type="checkbox" name="sub_property" value="6">
+                        <label for ="none"> <span></span>해당 없음</label>
+                        <br><br>
+                        <div class="signUp">
+                        <button id="signUpButton" >JOIN</button>
+                        </div>
+                        </form>
+                        </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+</div>
+</body>
+</html>

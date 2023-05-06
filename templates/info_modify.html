@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Orangetasteboy">
+  <title>개인정보 수정</title>
+
+  <link rel="stylesheet" href="../static/assets/fonts/fontawesome-free-5.15.4-web/css/fontawesome.min.css">
+  <link rel="stylesheet" href="../static/assets/css/reset.css">
+  <link rel="stylesheet" href="../static/assets/css/fonts.css">
+  <link rel="stylesheet" href="../static/assets/css/style.css">
+  <link rel="stylesheet" href="../static/assets/css/modify.css">
+</head>
+<body>
+<div id="root">
+  <header>
+    <div class="header container">
+      <div id="btn-menu" class="btn-menu">
+        <img src="../static/assets/img/menu_white_48dp.svg" alt="">
+      </div>
+      <div class="logo">
+        <img src="../static/assets/img/logo.png" alt="">
+      </div>
+    </div>
+  </header>
+
+  <div id="layer" class=""></div>
+
+  <nav id="gnb" class="">
+    <button type="button" id="btn-close_menu">
+      <img src="../static/assets/img/close_white_24dp.svg" alt="">
+    </button>
+    <ul>
+      <li class="sub_title">
+        <h4>사용자 기능</h4>
+      </li>
+      <li>
+        <span><a href="index.html">홈</a></span>
+      </li>
+      <li>
+        <span><a href="analyze.html">과거 식단 조회 및 분석</a></span>
+      </li>
+      <li class="sub_title">
+        <h4>식단 추가</h4>
+      </li>
+      <li>
+        <span><a href="pic_upload.html">오늘 먹은 식단 추가하기</a></span>
+      </li>
+      <li class="sub_title">
+        <h4>개인정보 관리</h4>
+      </li>
+      <li>
+        <span><a href="info_modify.html">개인정보 변경</a></span>
+      </li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="section-item container">
+      <div class="section-item-title">
+        <span>개인 정보 수정</span>
+      </div>
+      <div class="section-item-content white-bg-box">
+        <div id="subj_name"><h5>이름</h5></div>
+        <div class="name">
+          <input id="name"  type="text" placeholder="이름을 입력해 주세요.">
+          <div id="nameError" class="error"></div>
+        </div>
+        <br>
+        <div id="subj_id"><h5>아이디</h5></div>
+        <div class="id">
+          <input id="id" type="text" placeholder="아이디를 입력해 주세요.">
+          <div id="idError" class="error"></div>
+        </div>
+        <br>
+        <div id="subj_password"><h5>비밀번호</h5></div>
+        <div class="password">
+          <input id="password" type="password" placeholder="비밀번호를 입력해 주세요.">
+          <div id="passwordError" class="error"></div>
+        </div>
+        <div class="passwordCheck">
+          <input id="passwordCheck" type="password" placeholder="비밀번호를 다시 입력해 주세요.">
+          <div id="passwordCheckError" class="error"></div>
+        </div>
+        <br>
+        <div id="subj_phone"><h5>휴대폰 번호</h5></div>
+        <div class="phone">
+          <input id="phone1" type="text" size="1" maxlength="3" oninput="changePhone1()"> -
+          <input id="phone2" type="text" size="3" maxlength="4" oninput="changePhone2()"> -
+          <input id="phone3" type="text" size="3" maxlength="4" oninput="changePhone3()">
+        </div>
+        <br>
+        <div id="subj_email"><h5>이메일</h5></div>
+        <div class="email">
+          <input id="email" type="email" placeholder="이메일을 입력해 주세요.">
+        </div>
+        <br>
+        <div id="subj_gender"><h5>성별</h5></div><br>
+        &nbsp&nbsp<input id="man" type="radio" name="subj_gender">
+        <label for ="man"> <span></span>남성</label>
+        <br>
+        &nbsp&nbsp<input id="woman" type="radio" name="subj_gender">
+        <label for ="woman"> <span></span>여성</label>
+        <br><br>
+
+        <div id="subj_property"><h5>나의 관심 분야</h5></div><br>
+        &nbsp&nbsp<input id="high" type="checkbox" name="sub_property">
+        <label for ="high"> <span></span>고혈압</label>
+        <br>
+        &nbsp&nbsp<input id="hyper" type="checkbox" name="sub_property">
+        <label for ="hyper"> <span></span>고지혈증</label>
+        <br>
+        &nbsp&nbsp<input id="diabetes" type="checkbox" name="sub_property">
+        <label for ="diabetes"> <span></span>당뇨</label>
+        <br>
+        &nbsp&nbsp<input id="obe" type="checkbox" name="sub_property">
+        <label for ="obe"> <span></span>비만</label>
+        <br>
+        &nbsp&nbsp<input id="lactose" type="checkbox" name="sub_property">
+        <label for ="lactose"> <span></span>유당불내증</label>
+        <br>
+        &nbsp&nbsp<input id="fitness" type="checkbox" name="sub_property">
+        <label for ="fitness"> <span></span>운동</label>
+        <br>
+        &nbsp&nbsp<input id="pregnant" type="checkbox" name="sub_property">
+        <label for ="pregnant"> <span></span>임산부</label>
+        <br>
+        &nbsp&nbsp<input id="none" type="checkbox" name="sub_property">
+        <label for ="none"> <span></span>해당 없음</label>
+      </div>
+      <br><br>
+      <div class="signUp">
+        <button id="signUpButton" disabled onclick="signUpCheck()">수정하기</button>
+      </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../static/assets/js/main.js"></script>
+</body>
+</html>

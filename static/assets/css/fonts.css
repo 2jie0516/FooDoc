@@ -1,0 +1,38 @@
+/* ************************************** *
+ * NanumSquare
+ * ************************************** */
+ @font-face{
+    font-family: 'NanumSquare'; 
+    src: url('../fonts/NanumSquareL.ttf'); 
+    font-weight: 300; 
+    unicode-range: U+AC00-D7A3;
+}
+@font-face{
+    font-family: 'NanumSquare'; 
+    src: url('../fonts/NanumSquareR.ttf'); 
+    font-weight: 400; 
+    unicode-range: U+AC00-D7A3;
+}
+@font-face{
+    font-family: 'NanumSquare'; 
+    src: url('../fonts/NanumSquareB.ttf'); 
+    font-weight: 700; 
+    unicode-range: U+AC00-D7A3;
+}
+@font-face{
+    font-family: 'NanumSquare'; 
+    src: url('../fonts/NanumSquareEB.ttf'); 
+    font-weight: 800;
+    unicode-range: U+AC00-D7A3;
+}
+
+/* ************************************** *
+ * Noto Sans Korean
+ * ************************************** */
+ @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+ 
+ html, body { font-family: 'NanumSquare', 'Noto Sans KR', sans-serif; -webkit-font-smoothing: antialiased; }
+ * {font-family: inherit;}
+
+ [data-font="nanum"] {font-family: "NanumSquare", sans-serif;}

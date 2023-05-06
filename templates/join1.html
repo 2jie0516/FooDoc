@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Orangetasteboy">
+    <title>회원가입</title>
+
+    <link rel="stylesheet" href="../static/assets/css/Join1.css">
+</head>
+<body>
+<div id="container">
+    <div id=""></div>
+    <header>
+        <nav>
+        </nav>
+    </header>
+    <div id="contents">
+        <div id="login">
+            <div id="log_left"></div>
+            <div id="log_right"></div>
+            <div id="log_up"></div>
+
+            <div id="log_cen">
+                <div class="wrapper">
+                    <form method="post" action="/join_process1" enctype="multipart/form-data">
+                    <div class="title"><h1>계정 만들기</h1></div>
+                    {% if status == 1 %}
+                    <div style="color: red">이미 존재하는 아이디입니다.</div>
+                    {% endif %}
+                    <br>
+                    <div id="subj_name"><h5>이름</h5></div>
+                    <div class="name">
+                        <input id="name" name="name" type="text" placeholder="이름을 입력해 주세요.">
+                        <div id="nameError" class="error"></div>
+                    </div>
+                    <br>
+                    <div id="subj_id"><h5>아이디</h5></div>
+                    <div class="id">
+                        <input id="user_id" name="user_id" type="text" placeholder="아이디를 입력해 주세요.">
+                        <div id="idError" class="error"></div>
+                    </div>
+                    <br>
+                    <div id="subj_password"><h5>비밀번호</h5></div>
+                    <div class="password">
+                        <input id="pw" name = "pw" type="password" placeholder="비밀번호를 입력해 주세요.">
+                        <div id="passwordError" class="error"></div>
+                    </div>
+                    <div class="passwordCheck">
+                        <input id="pwCheck" type="password" placeholder="비밀번호를 다시 입력해 주세요.">
+                        <div id="passwordCheckError" class="error"></div>
+                    </div>
+                    <br>
+                    <div id="subj_phone"><h5>휴대폰 번호</h5></div>
+                    <div class="phone">
+                        <input id="phone" style="width: 400px" type="text" size="20" maxlength="11" oninput="changePhone1()" placeholder="휴대폰 번호를 입력해주세요.">
+                    </div>
+                    <br>
+                    <div id="subj_email"><h5>이메일</h5></div>
+                    <div class="email">
+                        <input id="email" type="email" placeholder="이메일을 입력해 주세요.">
+                    </div>
+                    <br><br>
+                        <input type="submit" value="NEXT">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+</div>
+</body>
+</html>

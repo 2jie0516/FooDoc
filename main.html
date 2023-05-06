@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!--가장 최신 모드의 IE버전 선택 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> <!-- 아이폰 옵션 -->
+        <meta name="description" content="" />  <!-- 설명 정의 -->
+        <meta name="author" content="" /> <!--저자 정의 -->
+        <title>Food Doctor</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!--사용자 자격 증명을 보내지 않고 바로 실행 -->
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark " style="background-color: #FF7F00;">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.html">Food Doctor</a>
+            <!-- Sidebar Toggle-->
+            <!-- <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button> 이걸로 메뉴 바 숨길 수 있음 -->
+            <!-- Navbar Search-->
+            
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4" style="padding-left: 1000px;">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    </ul>
+                    <!-- 검색창 옆에 있는 회원 메뉴 -->
+                </li>
+            </ul>
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="" aria-label="" aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div> <!-- 검색창-->
+            </form>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark"  id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                식습관 분석
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                회원 제공 기능
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="layout-static.html">맞춤형 프리프롬 제품</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">의약품 추천</a>
+                                </nav>
+                            </div>
+                            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Pages
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                        Authentication
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="login.html">Login</a>
+                                            <a class="nav-link" href="register.html">Register</a>
+                                            <a class="nav-link" href="password.html">Forgot Password</a>
+                                        </nav>
+                                    </div>
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                        Error
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="401.html">401 Page</a>
+                                            <a class="nav-link" href="404.html">404 Page</a>
+                                            <a class="nav-link" href="500.html">500 Page</a>
+                                        </nav>
+                                    </div>
+                                </nav>
+                            </div> -->
+                            <div class="sb-sidenav-menu-heading">Addons</div>
+                            <a class="nav-link" href="charts.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Charts
+                            </a>
+                            <a class="nav-link" href="tables.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Tables
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">로그인 정보:</div>
+                        김태정 회원님
+                    </div>
+                </nav>
+            </div>
+            <!-- 사이드 메뉴 -->
+            <div id="layoutSidenav_content">
+                <main> <!-- 메인 내용 -->
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">식습관 분석</h1>
+                        <ol class="breadcrumb mb-4">
+                            
+                        </ol>
+                        <div id="wrapper">
+
+                            <!-- Main -->
+                                <div id="main">
+                                    <div class="inner">
+            
+                                        <!-- Header -->
+                                            <header id="header">
+                                                <a href="index.html" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
+                                                <ul class="icons">
+                                                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                                    <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                                    <li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+                                                    <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                                                    <li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+                                                </ul>
+                                            </header>
+            
+                                        <!-- Banner -->
+                                            <section id="banner">
+                                                <div class="content">
+                                                    <header>
+                                                        <h1>Hi, I’m Editorial<br />
+                                                        by HTML5 UP</h1>
+                                                        <p>A free and fully responsive site template</p>
+                                                    </header>
+                                                    <p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
+                                                    <ul class="actions">
+                                                        <li><a href="#" class="button big">Learn More</a></li>
+                                                    </ul>
+                                                </div>
+                                                <span class="image object">
+                                                    <img src="images/pic10.jpg" alt="" />
+                                                </span>
+                                            </section>
+            
+                                        <!-- Section -->
+                                            <section>
+                                                <header class="major">
+                                                    <h2>Erat lacinia</h2>
+                                                </header>
+                                                <div class="features">
+                                                    <article>
+                                                        <span class="icon fa-gem"></span>
+                                                        <div class="content">
+                                                            <h3>Portitor ullamcorper</h3>
+                                                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        </div>
+                                                    </article>
+                                                    <article>
+                                                        <span class="icon solid fa-paper-plane"></span>
+                                                        <div class="content">
+                                                            <h3>Sapien veroeros</h3>
+                                                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        </div>
+                                                    </article>
+                                                    <article>
+                                                        <span class="icon solid fa-rocket"></span>
+                                                        <div class="content">
+                                                            <h3>Quam lorem ipsum</h3>
+                                                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        </div>
+                                                    </article>
+                                                    <article>
+                                                        <span class="icon solid fa-signal"></span>
+                                                        <div class="content">
+                                                            <h3>Sed magna finibus</h3>
+                                                            <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                            </section>
+            
+                                        <!-- Section -->
+                                            <section>
+                                                <header class="major">
+                                                    <h2>Ipsum sed dolor</h2>
+                                                </header>
+                                                <div class="posts">
+                                                    <article>
+                                                        <a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+                                                        <h3>Interdum aenean</h3>
+                                                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        <ul class="actions">
+                                                            <li><a href="#" class="button">More</a></li>
+                                                        </ul>
+                                                    </article>
+                                                    <article>
+                                                        <a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
+                                                        <h3>Nulla amet dolore</h3>
+                                                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        <ul class="actions">
+                                                            <li><a href="#" class="button">More</a></li>
+                                                        </ul>
+                                                    </article>
+                                                    <article>
+                                                        <a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
+                                                        <h3>Tempus ullamcorper</h3>
+                                                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        <ul class="actions">
+                                                            <li><a href="#" class="button">More</a></li>
+                                                        </ul>
+                                                    </article>
+                                                    <article>
+                                                        <a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
+                                                        <h3>Sed etiam facilis</h3>
+                                                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        <ul class="actions">
+                                                            <li><a href="#" class="button">More</a></li>
+                                                        </ul>
+                                                    </article>
+                                                    <article>
+                                                        <a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
+                                                        <h3>Feugiat lorem aenean</h3>
+                                                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        <ul class="actions">
+                                                            <li><a href="#" class="button">More</a></li>
+                                                        </ul>
+                                                    </article>
+                                                    <article>
+                                                        <a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
+                                                        <h3>Amet varius aliquam</h3>
+                                                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                                                        <ul class="actions">
+                                                            <li><a href="#" class="button">More</a></li>
+                                                        </ul>
+                                                    </article>
+                                                </div>
+                                            </section>
+                                            
+            
+                                    </div>
+                                </div>
+            
+                            <!-- Sidebar -->
+                                
+            
+                                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Food Doctor</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+    </body>
+</html>

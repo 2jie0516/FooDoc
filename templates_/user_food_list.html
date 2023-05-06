@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        food_list
+    </title>
+<body>
+<div class="container">
+    <h1>FooDoc Test Server</h1>
+    <h2>식단 목록</h2>
+<!--    <div>-->
+<!--        {{ food_list[0] }} {{ food_list[1] }} {{ food_list[2] }} {{ food_list[3] }}-->
+<!--    </div>-->
+    <table border="1" bordercolor="blue" width="600" height="300" align="center">
+
+        <tr align="center" bgcolor="skybule">
+            <td>식사 구분</td>
+            <td>food name</td>
+            <td>energy</td>
+            <td>protein</td>
+            <td>fat</td>
+            <td>water</td>
+            <td>tansu</td>
+            <td>sugar</td>
+            <td>date</td>
+        </tr>
+        {% for food in food_list %}
+
+        <tr>
+            <td>{{ food[0] }}</td>
+            <td>{{ food[1] }}</td>
+            <td>{{ food[2] }}</td>
+            <td>{{ food[3] }}</td>
+            <td>{{ food[4] }}</td>
+            <td>{{ food[5] }}</td>
+            <td>{{ food[6] }}</td>
+            <td>{{ food[7] }}</td>
+            <td>{{ food[8] }}</td>
+        </tr>
+
+        {% endfor %}
+    </table><br>
+
+    <!--        <div>-->
+
+    <!--            <p>{{label}} {{probability}}</p>-->
+
+    <!--        </div>-->
+
+
+    <form action="/main" enctype="multipart/form-data">
+        <input type="submit" value="메인 페이지 이동">
+    </form><br><br>
+    <!--    <form method="post" action="/upload" enctype="multipart/form-data">-->
+    <!--        <input type="file" name="file">-->
+    <!--        <input type="submit" value="submit">-->
+    <!--    </form>-->
+</div>
+</body>
+</head>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Orangetasteboy">
+    <title>홈</title>
+
+    <link rel="stylesheet" href="../static/assets/fonts/fontawesome-free-5.15.4-web/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../static/assets/css/reset.css">
+    <link rel="stylesheet" href="../static/assets/css/fonts.css">
+    <link rel="stylesheet" href="../static/assets/css/style.css">
+</head>
+<body>
+    <div id="root">
+        <header>
+            <div class="header container">
+                <div id="btn-menu" class="btn-menu">
+                    <img src="../static/assets/img/menu_white_48dp.svg" alt="">
+                </div>
+                <div class="logo">
+                    <img src="../static/assets/img/logo.png" alt="">
+                </div>
+            </div>
+        </header>
+
+        <div id="layer" class=""></div>
+
+        <nav id="gnb" class="">
+            <button type="button" id="btn-close_menu">
+                <img src="../static/assets/img/close_white_24dp.svg" alt="">
+            </button>
+            <ul>
+                <li class="sub_title">
+                    <h4>사용자 기능</h4>
+                </li>
+                <li>
+                    <span><a href="index.html">홈</a></span>
+                </li>
+                <li>
+                    <span><a href="/list">과거 식단 조회 및 분석</a></span>
+                </li>
+                <li class="sub_title">
+                    <h4>식단 추가</h4>
+                </li>
+                <li>
+                    <span><a href="/pic_upload">오늘 먹은 식단 추가하기</a></span>
+                </li>
+                <li class="sub_title">
+                    <h4>개인정보 관리</h4>
+                </li>
+                <li>
+                    <span><a href="info_modify.html">개인정보 변경</a></span>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="summary">
+                <div class="summary-total">
+                    <span>{{ name }}님의 건강 점수 <em class="highlight color-green">00점</em></span>
+                </div>
+                <div class="summary-lank">
+                    <ul>
+                        <li>
+                            <span>1위</span>
+                            <span>홍길동</span>
+                        </li>
+                        <li>
+                            <span>2위</span>
+                            <span>홍길동</span>
+                        </li>
+                        <li>
+                            <span>3위</span>
+                            <span>홍길동</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-item container">
+                <div class="section-item-title">
+                    <span>주간 칼로리 섭취량</span>
+                </div>
+                <div class="section-item-content white-bg-box">
+                    <div class="chart-canvas">
+                        <canvas id="chart_01"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-item container">
+                <div class="section-item-title">
+                    <span>일일 영양소 섭취량</span>
+                </div>
+                <div class="section-item-content white-bg-box">
+                    <div class="chart-canvas">
+                        <canvas id="chart_02"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <div class="section-item container">
+                <div class="section-item-title">
+                    <span>나의 관심 분야</span>
+                </div>
+                <div class="section-item-content">
+                    <div class="video-slide-container">
+                        <div class="slide-wrapper">
+                            <div class="slide-item">
+                                <iframe src={{youtube_list[0]}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                            <div class="slide-item">
+                                <iframe src={{youtube_list[1]}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                            <div class="slide-item">
+                                <iframe src={{youtube_list[2]}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                            <div class="slide-item">
+                                <iframe src={{youtube_list[3]}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                            <div class="slide-item">
+                                <iframe src={{youtube_list[4]}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../static/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="../static/assets/js/main.js"></script>
+    <script>
+        //To register it globally to all charts
+        Chart.register(ChartDataLabels);
+
+        const ctx1 = document.getElementById('chart_01');
+        const ctx2 = document.getElementById('chart_02');
+        const basePoint = {{ class_result[0] }};
+        const basePoint_tansu = {{ class_result[1] }};
+        const basePoint_protein = {{ class_result[2] }};
+        const basePoint_fat = {{ class_result[3] }};
+
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['{{ date_list[6] }}', '{{ date_list[5] }}', '{{ date_list[4] }}', '{{ date_list[3] }}', '{{ date_list[2] }}', '{{ date_list[1] }}', '{{ date_list[0] }}'],
+                datasets: [{
+                    label: false,
+
+                    data: [{{ kal_list[6] }}, {{ kal_list[5] }}, {{ kal_list[4] }}, {{ kal_list[3] }}, {{ kal_list[2] }}, {{ kal_list[1] }}, {{ kal_list[0] }}],
+                    backgroundColor: ['#77933C'],
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            font: {
+                                size: 9,
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false,
+                        },
+                        beginAtZero: true,
+                        min: 0,
+                        max: 3000,
+                    }
+                },
+
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    datalabels: {
+                        anchor: "end",
+                        align: "top",
+                        color: function(context) {
+
+                            var value = context.dataset.data[context.dataIndex];
+
+                            return (
+                                value < basePoint ? "#0054FF" :
+                                value > basePoint ? "#ff0000" :
+                                "#028f00"
+                            );
+                        },
+                        font: {
+                            size: 10,
+                            weight: "bold",
+                        },
+                        offset: 2,
+                        formatter: function(value, context) {
+                            var value = context.dataset.data[context.dataIndex];
+                            var glyph = value > basePoint ? "▲" : value < basePoint ? "▼" : "■";
+
+                            return glyph + " " + Math.round(basePoint - value);
+                        },
+                    }
+                },
+
+                // Core options
+                aspectRatio: 5 / 3,
+                layout: {
+                    padding: {
+                        top: 32,
+                        right: 24,
+                        bottom: 8,
+                        left: 0
+                    }
+                },
+                elements: {
+                    line: {
+                        fill: false,
+                        tension: 0.4
+                    }
+                },
+            }
+        });
+
+
+
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['비타민A', '비타민B', '비타민C', '비타민D', '탄수화물', '단백질', '지방'],
+                datasets: [{
+                    label: false,
+                    data: [80, 66, 45, 30, {{food_info[1]}}, {{food_info[2]}} , {{food_info[3]}}],
+                    backgroundColor: ['#77933C'],
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            font: {
+                                size: 9,
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false,
+                        },
+                        beginAtZero: true,
+                        min: 0,
+                        max: 500,
+                    }
+                },
+                
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    datalabels: {
+                        anchor: "end",
+                        align: "top",
+                        color: function(context) {
+                            var value = context.dataset.data[context.dataIndex];
+
+                            if(context.dataIndex == 0){
+                                var basePoint = 150;
+                            }
+
+                            else if(context.dataIndex == 1){
+                                var basePoint = 200;
+                            }
+                            else if(context.dataIndex == 2){
+                                var basePoint = 250;
+                            }
+                            else if(context.dataIndex == 3){
+                                var basePoint = 300;
+                            }
+                            else if(context.dataIndex == 4){
+                                var basePoint = 100;
+                            }
+                            else if(context.dataIndex == 5){
+                                var basePoint = 200;
+                            }
+                            else if(context.dataIndex == 6){
+                                var basePoint = 200;
+                            }
+                            console.log(basePoint);
+                            return (
+                                value < basePoint ? "#ff0000" : 
+                                value > basePoint ? "#0054FF" : 
+                                "#028f00"
+                            );
+                        },
+                        font: {
+                            size: 10,
+                            weight: "bold",
+                        },
+                        offset: 2,
+                        formatter: function(value, context) {
+                            var value = context.dataset.data[context.dataIndex];
+                            var glyph = value < basePoint ? "▲" : value > basePoint ? "▼" : "■";
+
+                            return glyph + " " + Math.round(value);
+                        },
+                    }
+                },
+
+                // Core options
+                aspectRatio: 5 / 3,
+                layout: {
+                    padding: {
+                        top: 32,
+                        right: 24,
+                        bottom: 8,
+                        left: 0
+                    }
+                },
+                elements: {
+                    line: {
+                        fill: false,
+                        tension: 0.4
+                    }
+                },
+            }
+        });
+    </script>
+</body>
+</html>

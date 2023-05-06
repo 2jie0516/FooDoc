@@ -1,0 +1,1 @@
+python detect.py --weight FOOD5_best7.pt --imgs 640 --conf 0.5 --source '빈 문서 1001.jpg'

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        food_list
+    </title>
+<body>
+<div class="container">
+    <h1>FooDoc Test Server</h1>
+    <h2>영양제 추천</h2>
+
+    <table border="1" bordercolor="blue" width="600" height="300" align="center">
+
+        <tr align="center" bgcolor="skybule">
+            <td>영양소 구분</td>
+            <td>영양제</td>
+        </tr>
+        {% for info in recommend_list %}
+
+        {% if info == 0 %}
+        <tr>
+            <td>칼로리</td>
+            <td>많이 먹으세요^^</td>
+        </tr>
+
+        {% elif info == 1 %}
+        <tr>
+            <td>단백질</td>
+            <td>고기 많이 드세요^^</td>
+        </tr>
+
+        {% elif info == 2 %}
+        <tr>
+            <td>수분</td>
+            <td>물 많이 마시세요^^</td>
+        </tr>
+
+        {% elif info == 3 %}
+        <tr>
+            <td>탄수화물</td>
+            <td>밥 많이 먹으세요^^</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table><br>
+    *최근 일주일간 섭취 영양소의 평균을 기준으로 산출
+    <!--        <div>-->
+
+    <!--            <p>{{label}} {{probability}}</p>-->
+
+    <!--        </div>-->
+
+
+    <form action="/main" enctype="multipart/form-data">
+        <input type="submit" value="메인 페이지 이동">
+    </form><br><br>
+    <!--    <form method="post" action="/upload" enctype="multipart/form-data">-->
+    <!--        <input type="file" name="file">-->
+    <!--        <input type="submit" value="submit">-->
+    <!--    </form>-->
+</div>
+</body>
+</head>
