@@ -77,45 +77,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            {% for food_list in food_lists %}
                                 <tr>
-                                    <td>3/20</td>
-                                    <td>떡볶이</td>
-                                    <td>00/00/00</td>
+                                    <td>{{ food_list[2] }}</td>
+                                    <td>{{ food_list[0] }}</td>
+                                    <td>{{ food_list[1] }}</td>
                                 </tr>
-                                <tr>
-                                    <td>3/20</td>
-                                    <td>떡볶이</td>
-                                    <td>00/00/00</td>
-                                </tr>
-                                <tr>
-                                    <td>3/20</td>
-                                    <td>떡볶이</td>
-                                    <td>00/00/00</td>
-                                </tr>
-                                <tr>
-                                    <td>3/20</td>
-                                    <td>떡볶이</td>
-                                    <td>00/00/00</td>
-                                </tr>
-                                <tr>
-                                    <td>3/20</td>
-                                    <td>떡볶이</td>
-                                    <td>00/00/00</td>
-                                </tr>
-                                <tr>
-                                    <td>3/20</td>
-                                    <td>떡볶이</td>
-                                    <td>00/00/00</td>
-                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                         <div class="table-pagination">
                             <span class="pagi-nav pagi-nav-left"><a><img src="../static/assets/img/chevron-left-regular-24.png" alt=""></a></span>
                             <ul>
-                                <li><span><a class="active">1</a></span></li>
-                                <li><span><a>2</a></span></li>
-                                <li><span><a>3</a></span></li>
-                                <li><span><a>4</a></span></li>
+
+                                {% for i in range(idx) %}
+
+                                <li><span><a href="{{ url_for('analyze', page = i+1) }}">{{ i+1 }}</a></span></li>
+
+                                {% endfor %}
                             </ul>
                             <span class="pagi-nav pagi-nav-right"><a><img src="../static/assets/img/chevron-right-regular-24.png" alt=""></a></span>
                         </div>

@@ -9,6 +9,7 @@ from tensorflow import keras
 from datetime import datetime
 import numpy as np
 from datetime import date, timedelta
+from math import ceil
 import pandas as pd
 import matplotlib.pyplot as plt
 from keras import Sequential
@@ -137,8 +138,10 @@ def main():
             kal_list[idx] = i[0]
             idx += 1
 
-        sql_food = "select sum(energy) AS energy,sum(protein) AS protein,sum(water) AS water,sum(tansu) AS tansu,user_id AS id from eat_food " \
+        sql_food = "select (case when sum(energy) is null then 0 else sum(energy) end) AS energy,(case when sum(protein) is null then 0 else sum(protein) end) AS protein," \
+                   "(case when sum(water) is null then 0 else sum(water) end) AS water,(case when sum(tansu) is null then 0 else sum(tansu) end) AS tansu from eat_food " \
                    "where user_id = %s and month(date) = month(now()) and day(date) = day(now());"
+
 
 
         curs.execute(sql_food, str(user_id))
@@ -180,7 +183,27 @@ def main():
 
 @app.route('/list')
 def analyze():
-    return render_template('analyze.html')
+    user_id = escape(session['user_id'])
+    page = request.args.get('page', type=int, default=1)
+
+
+    sql_all = "select count(food_name) as date from eat_food where user_id=%s order by date desc;"
+
+    curs.execute(sql_all, str(user_id))
+
+    idx = curs.fetchone()
+
+    idx = int(ceil(idx[0] / 6))
+    if page != 1:
+        page = (page-1) * 6;
+    sql_food = "select food_name,concat(tansu,\"/\",protein,\"/\",fat),date_format(date,'%%Y-%%m-%%d') as date from eat_food where user_id= %s " \
+               "order by date desc limit 6 offset %s;"
+
+    curs.execute(sql_food, (str(user_id),page))
+
+    food_lists = curs.fetchall()
+
+    return render_template('analyze.html',food_lists=food_lists,idx = idx)
 
 @app.route('/pic_upload')
 def pic():
