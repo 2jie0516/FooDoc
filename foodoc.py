@@ -124,31 +124,89 @@ def main():
 
         print(user_id)
 
-        sql_kal = "SELECT sum(energy) as energy FROM eat_food WHERE date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK)" \
-                  " AND NOW() AND user_id = %s group by day(date)"
+        sql_kal_day1 = "SELECT sum(energy) as energy FROM eat_food " \
+                       "WHERE month(date) = month(now()) AND day(date) = day(now())  AND user_id = %s group by day(date);"
 
-        curs.execute(sql_kal,str(user_id))
-        kal_info = curs.fetchall()
+        sql_kal_day2 = "SELECT sum(energy) as energy FROM eat_food " \
+                       "WHERE month(date) = month(now()) AND day(date) = day(now())-1  AND user_id = %s group by day(date);"
 
-        idx = 0;
+        sql_kal_day3 = "SELECT sum(energy) as energy FROM eat_food " \
+                       "WHERE month(date) = month(now()) AND day(date) = day(now())-2  AND user_id = %s group by day(date);"
+
+        sql_kal_day4 = "SELECT sum(energy) as energy FROM eat_food " \
+                       "WHERE month(date) = month(now()) AND day(date) = day(now())-3  AND user_id = %s group by day(date);"
+
+        sql_kal_day5 = "SELECT sum(energy) as energy FROM eat_food " \
+                       "WHERE month(date) = month(now()) AND day(date) = day(now())-4  AND user_id = %s group by day(date);"
+
+        sql_kal_day6 = "SELECT sum(energy) as energy FROM eat_food " \
+                       "WHERE month(date) = month(now()) AND day(date) = day(now())-5  AND user_id = %s group by day(date);"
+
+        sql_kal_day7 = "SELECT sum(energy) as energy FROM eat_food " \
+                       "WHERE month(date) = month(now()) AND day(date) = day(now())-6  AND user_id = %s group by day(date);"
+
+
+        curs.execute(sql_kal_day1,str(user_id))
+        kal_info_day1 = curs.fetchone()
+
+        curs.execute(sql_kal_day2, str(user_id))
+        kal_info_day2 = curs.fetchone()
+
+        curs.execute(sql_kal_day3, str(user_id))
+        kal_info_day3 = curs.fetchone()
+
+        curs.execute(sql_kal_day4, str(user_id))
+        kal_info_day4 = curs.fetchone()
+
+        curs.execute(sql_kal_day5, str(user_id))
+        kal_info_day5 = curs.fetchone()
+
+        curs.execute(sql_kal_day6, str(user_id))
+        kal_info_day6 = curs.fetchone()
+
+        curs.execute(sql_kal_day7, str(user_id))
+        kal_info_day7 = curs.fetchone()
+
+
 
         kal_list = [0 for i in range(7)]
 
-        for i in kal_info:
-            kal_list[idx] = i[0]
-            idx += 1
+        if(kal_info_day1 == None):
+            kal_list[0] = 0
+        else:
+            kal_list[0] = kal_info_day1[0];
+        if (kal_info_day2 == None):
+            kal_list[1] = 0
+        else:
+            kal_list[1] = kal_info_day2[0];
+        if (kal_info_day3 == None):
+            kal_list[2] = 0
+        else:
+            kal_list[2] = kal_info_day3[0];
+        if (kal_info_day4 == None):
+            kal_list[3] = 0
+        else:
+            kal_list[3] = kal_info_day4[0];
+        if (kal_info_day5 == None):
+            kal_list[4] = 0
+        else:
+            kal_list[4] = kal_info_day5[0];
+        if (kal_info_day6 == None):
+            kal_list[5] = 0
+        else:
+            kal_list[5] = kal_info_day6[0];
+        if (kal_info_day7 == None):
+            kal_list[6] = 0
+        else:
+            kal_list[6] = kal_info_day7[0];
+
 
         sql_food = "select (case when sum(energy) is null then 0 else sum(energy) end) AS energy,(case when sum(protein) is null then 0 else sum(protein) end) AS protein," \
                    "(case when sum(water) is null then 0 else sum(water) end) AS water,(case when sum(tansu) is null then 0 else sum(tansu) end) AS tansu from eat_food " \
                    "where user_id = %s and month(date) = month(now()) and day(date) = day(now());"
 
-
-
         curs.execute(sql_food, str(user_id))
         food_info = curs.fetchone()
-
-
-
 
         sql_class = "select kcal,tansu,protein,water from class " \
                     "where class_num = %s"
@@ -194,8 +252,11 @@ def analyze():
     idx = curs.fetchone()
 
     idx = int(ceil(idx[0] / 6))
+
     if page != 1:
         page = (page-1) * 6;
+    else :
+        page = 0
     sql_food = "select food_name,concat(tansu,\"/\",protein,\"/\",fat),date_format(date,'%%Y-%%m-%%d') as date from eat_food where user_id= %s " \
                "order by date desc limit 6 offset %s;"
 
@@ -203,7 +264,108 @@ def analyze():
 
     food_lists = curs.fetchall()
 
-    return render_template('analyze.html',food_lists=food_lists,idx = idx)
+    sql_name = "select class_num from user where user_id= %s"
+    curs.execute(sql_name, str(user_id))
+    row = curs.fetchone()
+    class_num = row[0]
+
+    sql_kal_day1 = "SELECT sum(energy) as energy FROM eat_food " \
+                   "WHERE month(date) = month(now()) AND day(date) = day(now())  AND user_id = %s group by day(date);"
+
+    sql_kal_day2 = "SELECT sum(energy) as energy FROM eat_food " \
+                   "WHERE month(date) = month(now()) AND day(date) = day(now())-1  AND user_id = %s group by day(date);"
+
+    sql_kal_day3 = "SELECT sum(energy) as energy FROM eat_food " \
+                   "WHERE month(date) = month(now()) AND day(date) = day(now())-2  AND user_id = %s group by day(date);"
+
+    sql_kal_day4 = "SELECT sum(energy) as energy FROM eat_food " \
+                   "WHERE month(date) = month(now()) AND day(date) = day(now())-3  AND user_id = %s group by day(date);"
+
+    sql_kal_day5 = "SELECT sum(energy) as energy FROM eat_food " \
+                   "WHERE month(date) = month(now()) AND day(date) = day(now())-4  AND user_id = %s group by day(date);"
+
+    sql_kal_day6 = "SELECT sum(energy) as energy FROM eat_food " \
+                   "WHERE month(date) = month(now()) AND day(date) = day(now())-5  AND user_id = %s group by day(date);"
+
+    sql_kal_day7 = "SELECT sum(energy) as energy FROM eat_food " \
+                   "WHERE month(date) = month(now()) AND day(date) = day(now())-6  AND user_id = %s group by day(date);"
+
+    curs.execute(sql_kal_day1, str(user_id))
+    kal_info_day1 = curs.fetchone()
+
+    curs.execute(sql_kal_day2, str(user_id))
+    kal_info_day2 = curs.fetchone()
+
+    curs.execute(sql_kal_day3, str(user_id))
+    kal_info_day3 = curs.fetchone()
+
+    curs.execute(sql_kal_day4, str(user_id))
+    kal_info_day4 = curs.fetchone()
+
+    curs.execute(sql_kal_day5, str(user_id))
+    kal_info_day5 = curs.fetchone()
+
+    curs.execute(sql_kal_day6, str(user_id))
+    kal_info_day6 = curs.fetchone()
+
+    curs.execute(sql_kal_day7, str(user_id))
+    kal_info_day7 = curs.fetchone()
+
+    kal_list = [0 for i in range(7)]
+
+    if (kal_info_day1 == None):
+        kal_list[0] = 0
+    else:
+        kal_list[0] = kal_info_day1[0];
+    if (kal_info_day2 == None):
+        kal_list[1] = 0
+    else:
+        kal_list[1] = kal_info_day2[0];
+    if (kal_info_day3 == None):
+        kal_list[2] = 0
+    else:
+        kal_list[2] = kal_info_day3[0];
+    if (kal_info_day4 == None):
+        kal_list[3] = 0
+    else:
+        kal_list[3] = kal_info_day4[0];
+    if (kal_info_day5 == None):
+        kal_list[4] = 0
+    else:
+        kal_list[4] = kal_info_day5[0];
+    if (kal_info_day6 == None):
+        kal_list[5] = 0
+    else:
+        kal_list[5] = kal_info_day6[0];
+    if (kal_info_day7 == None):
+        kal_list[6] = 0
+    else:
+        kal_list[6] = kal_info_day7[0];
+
+    date_list = [0 for i in range(7)]
+
+    date_list[0] = datetime.today().strftime('%m/%d')
+    date_list[1] = (datetime.today() - timedelta(1)).strftime('%m/%d')
+    date_list[2] = (datetime.today() - timedelta(2)).strftime('%m/%d')
+    date_list[3] = (datetime.today() - timedelta(3)).strftime('%m/%d')
+    date_list[4] = (datetime.today() - timedelta(4)).strftime('%m/%d')
+    date_list[5] = (datetime.today() - timedelta(5)).strftime('%m/%d')
+    date_list[6] = (datetime.today() - timedelta(6)).strftime('%m/%d')
+
+    sql_food = "select (case when sum(energy) is null then 0 else sum(energy) end) AS energy,(case when sum(protein) is null then 0 else sum(protein) end) AS protein," \
+               "(case when sum(water) is null then 0 else sum(water) end) AS water,(case when sum(tansu) is null then 0 else sum(tansu) end) AS tansu from eat_food " \
+               "where user_id = %s and month(date) = month(now()) and day(date) = day(now());"
+
+    curs.execute(sql_food, str(user_id))
+    food_info = curs.fetchone()
+
+    sql_class = "select kcal,tansu,protein,water from class " \
+                "where class_num = %s"
+
+    curs.execute(sql_class, class_num)
+    class_result = curs.fetchone()
+
+    return render_template('analyze.html',food_lists=food_lists,idx = idx, kal_list = kal_list , date_list = date_list,class_result = class_result,food_info = food_info)
 
 @app.route('/pic_upload')
 def pic():

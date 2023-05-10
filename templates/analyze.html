@@ -113,6 +113,8 @@
                 </div>
             </div>
 
+
+
             <div class="section-item container">
                 <div class="section-item-title">
                     <span>일주일 부족 & 과잉 영양소 표시</span>
@@ -121,35 +123,121 @@
                     <div class="item-list grid-2">
                         <div class="item">
                             <span class="data-nth_1">비타민 A</span>
-                            <span class="data-nth_2"><b class="color-red">69</b>mg / 50mg</span>
+                            <span class="data-nth_2"><b id="item1">{{food_info[1]}}</b>mg / {{ class_result[1] }}mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">비타민 B</span>
-                            <span class="data-nth_2"><b class="color-blue">33</b>mg / 50mg</span>
+                            <span class="data-nth_2"><b id="item2">33</b>mg / {{ class_result[1] }}mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">비타민 C</span>
-                            <span class="data-nth_2">00mg / 50mg</span>
+                            <span class="data-nth_2"><b id="item3">00</b>mg / {{ class_result[2] }}mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">비타민 D</span>
-                            <span class="data-nth_2">00mg / 50mg</span>
+                            <span class="data-nth_2"><b id="item4">00</b>mg / {{ class_result[3] }}mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">탄수화물</span>
-                            <span class="data-nth_2">00mg / 50mg</span>
+                            <span class="data-nth_2"><b id="item5">00</b>mg / 50mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">단백질</span>
-                            <span class="data-nth_2">00mg / 50mg</span>
+                            <span class="data-nth_2"><b id="item6">00</b>mg / 50mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">지방</span>
-                            <span class="data-nth_2">00mg / 50mg</span>
+                            <span class="data-nth_2"><b id="item7">00</b>mg / 50mg</span>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <script>
+                var item1 = document.getElementById("item1");
+
+                if(130 == {{ class_result[1] }}){
+                    item1.style.color = "black";
+                }
+                else if(150 < {{ class_result[1] }}){
+                    item1.style.color = "blue";
+                }
+                else{
+                    item1.style.color = "red";
+                }
+
+                var item2 = document.getElementById("item2");
+
+                if({{food_info[1]}} == {{ class_result[1] }}){
+                    item2.style.color = "black";
+                }
+                else if({{food_info[1]}} < {{ class_result[1] }}){
+                    item2.style.color = "blue";
+                }
+                else{
+                    item2.style.color = "red";
+                }
+
+                var item3 = document.getElementById("item3");
+
+                if({{food_info[1]}} == {{ class_result[1] }}){
+                    item3.style.color = "black";
+                }
+                else if({{food_info[1]}} < {{ class_result[1] }}){
+                    item3.style.color = "blue";
+                }
+                else{
+                    item3.style.color = "red";
+                }
+
+                var item4 = document.getElementById("item4");
+
+                if({{food_info[1]}} == {{ class_result[1] }}){
+                    item4.style.color = "black";
+                }
+                else if({{food_info[1]}} < {{ class_result[1] }}){
+                    item4.style.color = "blue";
+                }
+                else{
+                    item4.style.color = "red";
+                }
+
+                var item5 = document.getElementById("item5");
+
+                if({{food_info[1]}} == {{ class_result[1] }}){
+                    item5.style.color = "black";
+                }
+                else if({{food_info[1]}} < {{ class_result[1] }}){
+                    item5.style.color = "blue";
+                }
+                else{
+                    item5.style.color = "red";
+                }
+
+                var item6 = document.getElementById("item6");
+
+                if({{food_info[1]}} == {{ class_result[1] }}){
+                    item6.style.color = "black";
+                }
+                else if({{food_info[1]}} < {{ class_result[1] }}){
+                    item6.style.color = "blue";
+                }
+                else{
+                    item6.style.color = "red";
+                }
+
+                var item7 = document.getElementById("item7");
+
+                if({{food_info[1]}} == {{ class_result[1] }}){
+                    item7.style.color = "black";
+                }
+                else if({{food_info[1]}} < {{ class_result[1] }}){
+                    item7.style.color = "blue";
+                }
+                else{
+                    item7.style.color = "red";
+                }
+            </script>
 
             <div class="section-item container">
                 <div class="section-item-title">
@@ -261,15 +349,15 @@
         Chart.register(ChartDataLabels);
 
         const ctx1 = document.getElementById('chart_01');
-        const basePoint = 30;
+        const basePoint = {{ class_result[0] }};
       
         new Chart(ctx1, {
             type: 'bar',
             data: {
-                labels: ['비타민A', '비타민B', '비타민C', '비타민D', '탄수화물', '단백질', '지방'],
+                labels: ['{{ date_list[6] }}', '{{ date_list[5] }}', '{{ date_list[4] }}', '{{ date_list[3] }}', '{{ date_list[2] }}', '{{ date_list[1] }}', '{{ date_list[0] }}'],
                 datasets: [{
                     label: false,
-                    data: [80, 66, 45, 30, 77, 29, 33],
+                    data: [{{ kal_list[6] }}, {{ kal_list[5] }}, {{ kal_list[4] }}, {{ kal_list[3] }}, {{ kal_list[2] }}, {{ kal_list[1] }}, {{ kal_list[0] }}],
                     backgroundColor: ['#77933C'],
                 }]
             },
@@ -291,7 +379,7 @@
                         },
                         beginAtZero: true,
                         min: 0,
-                        max: 100,
+                        max: 3000,
                     }
                 },
                 
@@ -303,11 +391,12 @@
                         anchor: "end",
                         align: "top",
                         color: function(context) {
+
                             var value = context.dataset.data[context.dataIndex];
 
                             return (
-                                value < basePoint ? "#ff0000" : 
-                                value > basePoint ? "#0054FF" : 
+                                value < basePoint ? "#0054FF" :
+                                value > basePoint ? "#ff0000" :
                                 "#028f00"
                             );
                         },
@@ -318,9 +407,9 @@
                         offset: 2,
                         formatter: function(value, context) {
                             var value = context.dataset.data[context.dataIndex];
-                            var glyph = value < basePoint ? "▲" : value > basePoint ? "▼" : "■";
+                            var glyph = value > basePoint ? "▲" : value < basePoint ? "▼" : "■";
 
-                            return glyph + " " + Math.round(value);
+                            return glyph + " " + Math.round(basePoint - value);
                         },
                     }
                 },
