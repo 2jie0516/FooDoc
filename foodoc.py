@@ -64,23 +64,23 @@ def join_process_info():
     model_youtube = keras.models.load_model("yotube_class/model_load.h5")
     if(none != 6) :
         if(high == 1) :
-            a = int(high)
+            a = 1
         else :
             a = 0
         if (diabetes == 2):
-            b = int(diabetes)
+            b = 1
         else:
             b = 0
         if (obe == 3):
-            c = int(obe)
+            c = 1
         else:
             c = 0
         if (fitness == 4):
-            d = int(fitness)
+            d = 1
         else:
             d = 0
         if (pregnant == 5):
-            e = int(pregnant)
+            e = 1
         else:
             e = 0
         abcde = np.array([[a, b, c, d, e]])
@@ -233,8 +233,6 @@ def main():
         date_list[5] = (datetime.today() - timedelta(5)).strftime('%m/%d')
         date_list[6] = (datetime.today() - timedelta(6)).strftime('%m/%d')
 
-        for i in date_list:
-            print(i)
 
         return render_template('index.html', name=user_name ,food_info = food_info,kal_list = kal_list,class_result = class_result,date_list = date_list,youtube_list = youtube_list)
     else:
@@ -377,7 +375,7 @@ def analyze():
 
     food_idx = random.randrange(1,len(food_info_lack)+1)
 
-    print(idx)
+
 
     return render_template('analyze.html',food_lists=food_lists,idx = idx, kal_list = kal_list , date_list = date_list,class_result = class_result,food_info = food_info,food_info_lack = food_info_lack,food_idx = food_idx)
 
@@ -442,6 +440,7 @@ def upload():
     now = datetime.now().hour
     hour = int(now)
 
+
     if hour >= 5 and hour < 10:
         meal = '아침식사'
         sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -478,6 +477,39 @@ def upload():
         curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], meal))
 
         db.commit();
+
+    sql_class = "select max(class_num) as class_num,sum(energy) as energy,sum(protein) as protein,sum(water) as water,sum(tansu) as tansu from user " \
+                    "inner join eat_food on eat_food.user_id = user.user_id where user.user_id = %s and month(date) = month(now()) and day(date) = day(now());"
+
+    curs.execute(sql_class, str(user_id))
+    class_num = curs.fetchone()
+
+    sql_class = "select kcal,tansu,protein,water from class " \
+                    "where class_num = %s"
+
+    curs.execute(sql_class, class_num[0])
+    class_result = curs.fetchone()
+
+    health_score = ((class_result[0] - class_num[1]) / class_result[0] * 100 + (class_result[1] - class_num[4]) / class_result[1] * 100
+              + (class_result[2] - class_num[2]) / class_result[2] * 100 + (class_result[3] - class_num[3]) /class_result[3] * 100) / 4
+
+    print(int(health_score))
+
+    sql_exist = "select exists(select count(name) from score where user_id=%s and month(date) = month(now()) and day(date) = day(now()));"
+    curs.execute(sql_exist, str(user_id))
+    exist = curs.fetchone()
+
+    if exist == 1 :
+        sql = "insert into score(name,score) values(%s,%s)"
+        curs.execute(sql, (str(user_id), health_score))
+
+        db.commit();
+    else :
+        sql = "update score set score = %s where user_id= %s"
+        curs.execute(sql, (health_score,str(user_id)))
+
+        db.commit();
+
 
     return redirect(url_for('main'))
 #
