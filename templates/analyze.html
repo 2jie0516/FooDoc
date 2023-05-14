@@ -250,6 +250,13 @@
                             식욕부진, 단기 기억력 감소, 근육 무력증, 심장 비대, 각기병, 만성변비, 신경 기능 저하, 지루성 피부염, 구순염, 두통
 
                         </p>
+                        {% for key in food_info_lack %}
+                            <p><b>{{ key }}</b>
+
+                            {{ food_info_lack[key] }}
+
+                        </p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -270,7 +277,7 @@
 
             <div class="section-item container">
                 <div class="section-item-title">
-                    <span>이런 음식은 어떠세요?</span>
+                    <span>이런 음식은 어떠세요? {{ food_idx }}</span>
                 </div>
                 <div class="section-item-content">
                     <p class="recommend-txt">
@@ -303,36 +310,36 @@
                                 </span>
                                 <span class="item-txt">닭가슴살</span>
                             </div>
-                            <div class="slide-item">
-                                <span class="item-img">
-                                    <img src="../static/assets/img/sp2.jpg" alt="">
-                                </span>
-                                <span class="item-txt">두부조림</span>
-                            </div>
-                            <div class="slide-item">
-                                <span class="item-img">
-                                    <img src="../static/assets/img/sp3.jpg" alt="">
-                                </span>
-                                <span class="item-txt">고등어구이</span>
-                            </div>
-                            <div class="slide-item">
-                                <span class="item-img">
-                                    <img src="../static/assets/img/sp1.png" alt="">
-                                </span>
-                                <span class="item-txt">닭가슴살</span>
-                            </div>
-                            <div class="slide-item">
-                                <span class="item-img">
-                                    <img src="../static/assets/img/sp2.jpg" alt="">
-                                </span>
-                                <span class="item-txt">두부조림</span>
-                            </div>
-                            <div class="slide-item">
-                                <span class="item-img">
-                                    <img src="../static/assets/img/sp3.jpg" alt="">
-                                </span>
-                                <span class="item-txt">고등어구이</span>
-                            </div>
+<!--                            <div class="slide-item">-->
+<!--                                <span class="item-img">-->
+<!--                                    <img src="../static/assets/img/sp2.jpg" alt="">-->
+<!--                                </span>-->
+<!--                                <span class="item-txt">두부조림</span>-->
+<!--                            </div>-->
+<!--                            <div class="slide-item">-->
+<!--                                <span class="item-img">-->
+<!--                                    <img src="../static/assets/img/sp3.jpg" alt="">-->
+<!--                                </span>-->
+<!--                                <span class="item-txt">고등어구이</span>-->
+<!--                            </div>-->
+<!--                            <div class="slide-item">-->
+<!--                                <span class="item-img">-->
+<!--                                    <img src="../static/assets/img/sp1.png" alt="">-->
+<!--                                </span>-->
+<!--                                <span class="item-txt">닭가슴살</span>-->
+<!--                            </div>-->
+<!--                            <div class="slide-item">-->
+<!--                                <span class="item-img">-->
+<!--                                    <img src="../static/assets/img/sp2.jpg" alt="">-->
+<!--                                </span>-->
+<!--                                <span class="item-txt">두부조림</span>-->
+<!--                            </div>-->
+<!--                            <div class="slide-item">-->
+<!--                                <span class="item-img">-->
+<!--                                    <img src="../static/assets/img/sp3.jpg" alt="">-->
+<!--                                </span>-->
+<!--                                <span class="item-txt">고등어구이</span>-->
+<!--                            </div>-->
                         </div>
                     </div>
                 </div>

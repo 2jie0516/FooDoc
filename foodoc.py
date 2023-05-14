@@ -10,6 +10,7 @@ from datetime import datetime
 import numpy as np
 from datetime import date, timedelta
 from math import ceil
+import random
 import pandas as pd
 import matplotlib.pyplot as plt
 from keras import Sequential
@@ -365,7 +366,20 @@ def analyze():
     curs.execute(sql_class, class_num)
     class_result = curs.fetchone()
 
-    return render_template('analyze.html',food_lists=food_lists,idx = idx, kal_list = kal_list , date_list = date_list,class_result = class_result,food_info = food_info)
+    food_info_lack = {}
+
+    if food_info[0] < class_result[0] :
+        food_info_lack["탄수화물"] = "식욕부진, 단기 기억력 감소, 근육 무력증, 심장 비대, 각기병, 만성변비, 신경 기능 저하, 지루성 피부염, 구순염, 두통"
+
+
+    if food_info[1] < class_result[1] :
+        food_info_lack["탄수화물1"] = "식욕부진, 단기 기억력 감소, 근육 무력증, 심장 비대, 각기병, 만성변비, 신경 기능 저하, 지루성 피부염, 구순염, 두통"
+
+    food_idx = random.randrange(1,len(food_info_lack)+1)
+
+    print(idx)
+
+    return render_template('analyze.html',food_lists=food_lists,idx = idx, kal_list = kal_list , date_list = date_list,class_result = class_result,food_info = food_info,food_info_lack = food_info_lack,food_idx = food_idx)
 
 @app.route('/pic_upload')
 def pic():
