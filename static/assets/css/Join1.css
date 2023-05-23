@@ -107,9 +107,10 @@ header {
 .next {
     text-align: center;
 }
-.next button{
-    width: 25%;
-    height: 50px;
+#nextbutton {
+    text-align: center;
+    width: 20%;
+    height: 40px;
     border: 0;
     outline: none;
     border-radius: 40px;

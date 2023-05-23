@@ -1,77 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="Orangetasteboy">
-  <title>오늘 먹은 식단 추가하기</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Orangetasteboy">
+    <title>오늘 먹은 식단 추가하기</title>
 
-  <link rel="stylesheet" href="../static/assets/fonts/fontawesome-free-5.15.4-web/css/fontawesome.min.css">
-  <link rel="stylesheet" href="../static/assets/css/reset.css">
-  <link rel="stylesheet" href="../static/assets/css/fonts.css">
-  <link rel="stylesheet" href="../static/assets/css/style.css">
+    <link rel="stylesheet" href="../static/assets/fonts/fontawesome-free-5.15.4-web/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../static/assets/css/reset.css">
+    <link rel="stylesheet" href="../static/assets/css/fonts.css">
+    <link rel="stylesheet" href="../static/assets/css/style.css">
+    <style>
+
+
+        .btn-upload {
+            width: 100px;
+            height: 30px;
+            background: #fff;
+            border: 1px solid green;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+
+        }
+
+        #file {
+            display: none;
+        }
+
+        .btn-submit {
+            width: 100px;
+            height: 30px;
+            background: #fff;
+            border: 1px solid orange;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        #pic_submit {
+            display: none;
+        }
+
+    </style>
 </head>
 <body>
 <div id="root">
-  <header>
-    <div class="header container">
-      <div id="btn-menu" class="btn-menu">
-        <img src="../static/assets/img/menu_white_48dp.svg" alt="">
-      </div>
-      <div class="logo">
-        <img src="../static/assets/img/logo.png" alt="">
-      </div>
-    </div>
-  </header>
-
-  <div id="layer" class=""></div>
-
-  <nav id="gnb" class="">
-    <button type="button" id="btn-close_menu">
-      <img src="../static/assets/img/close_white_24dp.svg" alt="">
-    </button>
-    <ul>
-      <li class="sub_title">
-        <h4>사용자 기능</h4>
-      </li>
-      <li>
-        <span><a href="/main">홈</a></span>
-      </li>
-      <li>
-        <span><a href="analyze.html">과거 식단 조회 및 분석</a></span>
-      </li>
-      <li class="sub_title">
-        <h4>식단 추가</h4>
-      </li>
-      <li>
-        <span><a href="pic_upload.html">오늘 먹은 식단 추가하기</a></span>
-      </li>
-      <li class="sub_title">
-        <h4>개인정보 관리</h4>
-      </li>
-      <li>
-        <span><a href="info_modify.html">개인정보 변경</a></span>
-      </li>
-    </ul>
-  </nav>
-
-  <main>
-    <div class="section-item container">
-      <div class="section-item-title">
-        <span>식단 추가</span>
-      </div>
-      <div class="section-item-content white-bg-box">
-        <div class="chart-canvas">
-          <form method="post" action="/upload" enctype="multipart/form-data">
-              <input type="file" name="file">
-              <input type="submit" value="submit">
-          </form>
-          <canvas id="chart_02"></canvas>
+    <header>
+        <div class="header container">
+            <div id="btn-menu" class="btn-menu">
+                <img src="../static/assets/img/menu_white_48dp.svg" alt="">
+            </div>
+            <div class="logo">
+                <img src="../static/assets/img/logo.png" alt="">
+            </div>
         </div>
-      </div>
-    </div>
-  </main>
+    </header>
+
+    <div id="layer" class=""></div>
+
+    <nav id="gnb" class="">
+        <button type="button" id="btn-close_menu">
+            <img src="../static/assets/img/close_white_24dp.svg" alt="">
+        </button>
+        <ul>
+            <li class="sub_title">
+                <h4>사용자 기능</h4>
+            </li>
+            <li>
+                <span><a href="/main">홈</a></span>
+            </li>
+            <li>
+                <span><a href="/list">과거 식단 조회 및 분석</a></span>
+            </li>
+            <li class="sub_title">
+                <h4>식단 추가</h4>
+            </li>
+            <li>
+                <span><a href="/pic_upload">오늘 먹은 식단 추가하기</a></span>
+            </li>
+            <li class="sub_title">
+                <h4>개인정보 관리</h4>
+            </li>
+            <li>
+                <span><a href="/modify">개인정보 변경</a></span>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="section-item container">
+            <div class="section-item-title">
+                <span>식단 추가</span>
+            </div>
+
+            <div class="section-item-content white-bg-box" style="width: 500px; height: 300px">
+                <div style="text-align: center">
+                    <form method="post" action="/upload" enctype="multipart/form-data">
+                        <label for="file">
+                            <div class="btn-upload">식단 고르기</div>
+                        </label>
+                        <input id="file" type="file" name="file" accept="image/*" onchange="setThumbnail(event);"
+                               multiple/><br>
+
+                        <script>
+                            function setThumbnail(event) {
+                                for (var image of event.target.files) {
+                                    var reader = new FileReader();
+
+                                    reader.onload = function (event) {
+                                        var img = document.createElement("img");
+                                        img.setAttribute("src", event.target.result);
+                                        img.width = 200;
+                                        img.height = 150;
+                                        document.querySelector("div#image_container").appendChild(img);
+                                    };
+
+                                    console.log(image);
+                                    reader.readAsDataURL(image);
+                                }
+                            }
+                        </script>
+                        <label for="pic_submit">
+                            <div class="btn-submit">식단 입력</div>
+                        </label>
+                        <input type="submit" id="pic_submit" style="width: 70px">
+                        <div id="image_container" style="padding-left: 300px"></div>
+                    </form>
+                    <canvas id="chart_02"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
 
 <script src="../static/assets/js/main.js"></script>

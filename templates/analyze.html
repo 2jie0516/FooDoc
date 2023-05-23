@@ -36,22 +36,22 @@
                     <h4>사용자 기능</h4>
                 </li>
                 <li>
-                    <span><a href="index.html">홈</a></span>
+                    <span><a href="/main">홈</a></span>
                 </li>
                 <li>
-                    <span><a href="analyze.html">과거 식단 조회 및 분석</a></span>
+                    <span><a href="/list">과거 식단 조회 및 분석</a></span>
                 </li>
                 <li class="sub_title">
                     <h4>식단 추가</h4>
                 </li>
                 <li>
-                    <span><a href="pic_upload.html">오늘 먹은 식단 추가하기</a></span>
+                    <span><a href="/pic_upload">오늘 먹은 식단 추가하기</a></span>
                 </li>
                 <li class="sub_title">
                     <h4>개인정보 관리</h4>
                 </li>
                 <li>
-                    <span><a href="info_modify.html">개인정보 변경</a></span>
+                    <span><a href="/modify">개인정보 변경</a></span>
                 </li>
             </ul>
         </nav>
@@ -117,37 +117,37 @@
 
             <div class="section-item container">
                 <div class="section-item-title">
-                    <span>일주일 부족 & 과잉 영양소 표시</span>
+                    <span>일주일 부족 & 과잉 영양소 </span>
                 </div>
                 <div class="section-item-content white-bg-box">
                     <div class="item-list grid-2">
                         <div class="item">
                             <span class="data-nth_1">비타민 A</span>
-                            <span class="data-nth_2"><b id="item1">{{food_info[1]}}</b>mg / {{ class_result[1] }}mg</span>
+                            <span class="data-nth_2"><b id="item1">{{result[4]}}</b>mg / {{ class_result[4] }}mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">비타민 B</span>
-                            <span class="data-nth_2"><b id="item2">33</b>mg / {{ class_result[1] }}mg</span>
+                            <span class="data-nth_2"><b id="item2">{{result[5]}}</b>mg / {{ class_result[5] }}mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">비타민 C</span>
-                            <span class="data-nth_2"><b id="item3">00</b>mg / {{ class_result[2] }}mg</span>
+                            <span class="data-nth_2"><b id="item3">{{result[6]}}</b>mg / {{ class_result[6] }}mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">비타민 D</span>
-                            <span class="data-nth_2"><b id="item4">00</b>mg / {{ class_result[3] }}mg</span>
+                            <span class="data-nth_2"><b id="item4">{{result[7]}}</b>mg / {{ class_result[7] }}mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">탄수화물</span>
-                            <span class="data-nth_2"><b id="item5">00</b>mg / 50mg</span>
+                            <span class="data-nth_2"><b id="item5">{{result[3]}}</b>mg / {{ class_result[1] }}mg</span>
                         </div>
                         <div class="item">
                             <span class="data-nth_1">단백질</span>
-                            <span class="data-nth_2"><b id="item6">00</b>mg / 50mg</span>
+                            <span class="data-nth_2"><b id="item6">{{result[1]}}</b>mg / {{ class_result[2] }}mg</span>
                         </div>
                         <div class="item">
-                            <span class="data-nth_1">지방</span>
-                            <span class="data-nth_2"><b id="item7">00</b>mg / 50mg</span>
+                            <span class="data-nth_1">수분</span>
+                            <span class="data-nth_2"><b id="item7">{{result[2]}}</b>mg / {{ class_result[3] }}mg</span>
                         </div>
                     </div>
                 </div>
@@ -156,10 +156,10 @@
             <script>
                 var item1 = document.getElementById("item1");
 
-                if(130 == {{ class_result[1] }}){
+                if({{result[4]}} == {{ class_result[4] }}){
                     item1.style.color = "black";
                 }
-                else if(150 < {{ class_result[1] }}){
+                else if({{result[4]}} < {{ class_result[4] }}){
                     item1.style.color = "blue";
                 }
                 else{
@@ -168,10 +168,10 @@
 
                 var item2 = document.getElementById("item2");
 
-                if({{food_info[1]}} == {{ class_result[1] }}){
+                if({{result[5]}} == {{ class_result[5] }}){
                     item2.style.color = "black";
                 }
-                else if({{food_info[1]}} < {{ class_result[1] }}){
+                else if({{result[5]}} < {{ class_result[5] }}){
                     item2.style.color = "blue";
                 }
                 else{
@@ -180,10 +180,10 @@
 
                 var item3 = document.getElementById("item3");
 
-                if({{food_info[1]}} == {{ class_result[1] }}){
+                if({{result[6]}} == {{ class_result[6] }}){
                     item3.style.color = "black";
                 }
-                else if({{food_info[1]}} < {{ class_result[1] }}){
+                else if({{result[6]}} < {{ class_result[6] }}){
                     item3.style.color = "blue";
                 }
                 else{
@@ -192,10 +192,10 @@
 
                 var item4 = document.getElementById("item4");
 
-                if({{food_info[1]}} == {{ class_result[1] }}){
+                if({{result[7]}} == {{ class_result[7] }}){
                     item4.style.color = "black";
                 }
-                else if({{food_info[1]}} < {{ class_result[1] }}){
+                else if({{result[7]}} < {{ class_result[7] }}){
                     item4.style.color = "blue";
                 }
                 else{
@@ -204,10 +204,10 @@
 
                 var item5 = document.getElementById("item5");
 
-                if({{food_info[1]}} == {{ class_result[1] }}){
+                if({{result[3]}} == {{ class_result[1] }}){
                     item5.style.color = "black";
                 }
-                else if({{food_info[1]}} < {{ class_result[1] }}){
+                else if({{result[3]}} < {{ class_result[1] }}){
                     item5.style.color = "blue";
                 }
                 else{
@@ -216,10 +216,10 @@
 
                 var item6 = document.getElementById("item6");
 
-                if({{food_info[1]}} == {{ class_result[1] }}){
+                if({{result[1]}} == {{ class_result[2] }}){
                     item6.style.color = "black";
                 }
-                else if({{food_info[1]}} < {{ class_result[1] }}){
+                else if({{result[1]}} < {{ class_result[2] }}){
                     item6.style.color = "blue";
                 }
                 else{
@@ -228,10 +228,10 @@
 
                 var item7 = document.getElementById("item7");
 
-                if({{food_info[1]}} == {{ class_result[1] }}){
+                if({{result[2]}} == {{ class_result[3] }}){
                     item7.style.color = "black";
                 }
-                else if({{food_info[1]}} < {{ class_result[1] }}){
+                else if({{result[2]}} < {{ class_result[3] }}){
                     item7.style.color = "blue";
                 }
                 else{
@@ -239,17 +239,13 @@
                 }
             </script>
 
+
             <div class="section-item container">
                 <div class="section-item-title">
-                    <span>일주일 부족 & 과잉 영양소 표시</span>
+                    <span>나의 부족 영양소</span>
                 </div>
                 <div class="section-item-content white-bg-box">
                     <div class="text-wrapper">
-                        <p><b>비타민 A</b>
-
-                            식욕부진, 단기 기억력 감소, 근육 무력증, 심장 비대, 각기병, 만성변비, 신경 기능 저하, 지루성 피부염, 구순염, 두통
-
-                        </p>
                         {% for key in food_info_lack %}
                             <p><b>{{ key }}</b>
 
@@ -267,48 +263,51 @@
                 </div>
                 <div class="section-item-content white-bg-box">
                     <div class="text-wrapper">
-                        <p><b>비타민 B</b>
+                        {% for key in food_info_max %}
+                            <p><b>{{ key }}</b>
 
-                            오심, 현기증, 무력감, 가려움증, 두통, 탈모증, 피부 건조, 뼈관절 통증
+                            {{ food_info_max[key] }}
+
                         </p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
 
             <div class="section-item container">
                 <div class="section-item-title">
-                    <span>이런 음식은 어떠세요? {{ food_idx }}</span>
+                    <span>이런 음식은 어떠세요?</span>
                 </div>
                 <div class="section-item-content">
                     <p class="recommend-txt">
                         <span>AI가 당신의 식단을 분석해서 추천드려요!</span><br>
-                        <em>단백질</em> 섭취가 필요한 당신을 위한 식단
+                        <em>{{ lack_food }}</em> 섭취가 필요한 당신을 위한 식단
                     </p>
                     <div class="image-slide-container">
                         <div class="slide-wrapper">
                             <div class="slide-item">
                                 <span class="item-img">
-                                    <img src="../static/assets/img/sp1.png" alt="">
+                                    <img src={{food_load[1]}}  alt="">
                                 </span>
-                                <span class="item-txt">닭가슴살</span>
+                                <span class="item-txt">{{food_load[0]}}</span>
                             </div>
                             <div class="slide-item">
                                 <span class="item-img">
-                                    <img src="../static/assets/img/sp2.jpg" alt="">
+                                    <img src={{food_load[3]}} alt="">
                                 </span>
-                                <span class="item-txt">두부조림</span>
+                                <span class="item-txt">{{food_load[2]}}</span>
                             </div>
                             <div class="slide-item">
                                 <span class="item-img">
-                                    <img src="../static/assets/img/sp3.jpg" alt="">
+                                    <img src={{food_load[5]}} alt="">
                                 </span>
-                                <span class="item-txt">고등어구이</span>
+                                <span class="item-txt">{{food_load[4]}}</span>
                             </div>
                             <div class="slide-item">
                                 <span class="item-img">
-                                    <img src="../static/assets/img/sp1.png" alt="">
+                                    <img src={{food_load[7]}} alt="">
                                 </span>
-                                <span class="item-txt">닭가슴살</span>
+                                <span class="item-txt">{{food_load[6]}}</span>
                             </div>
 <!--                            <div class="slide-item">-->
 <!--                                <span class="item-img">-->
@@ -357,14 +356,15 @@
 
         const ctx1 = document.getElementById('chart_01');
         const basePoint = {{ class_result[0] }};
-      
+
         new Chart(ctx1, {
             type: 'bar',
             data: {
                 labels: ['{{ date_list[6] }}', '{{ date_list[5] }}', '{{ date_list[4] }}', '{{ date_list[3] }}', '{{ date_list[2] }}', '{{ date_list[1] }}', '{{ date_list[0] }}'],
                 datasets: [{
                     label: false,
-                    data: [{{ kal_list[6] }}, {{ kal_list[5] }}, {{ kal_list[4] }}, {{ kal_list[3] }}, {{ kal_list[2] }}, {{ kal_list[1] }}, {{ kal_list[0] }}],
+                    data: [2000, 2100, 1900, 2300, 2500, 1700, 1900],
+                    // data: [{{ kal_list[6] }}, {{ kal_list[5] }}, {{ kal_list[4] }}, {{ kal_list[3] }}, {{ kal_list[2] }}, {{ kal_list[1] }}, {{ kal_list[0] }}],
                     backgroundColor: ['#77933C'],
                 }]
             },
@@ -389,7 +389,7 @@
                         max: 3000,
                     }
                 },
-                
+
                 plugins: {
                     legend: {
                         display: false
@@ -416,7 +416,7 @@
                             var value = context.dataset.data[context.dataIndex];
                             var glyph = value > basePoint ? "▲" : value < basePoint ? "▼" : "■";
 
-                            return glyph + " " + Math.round(basePoint - value);
+                            return glyph + " " + Math.abs(Math.round(basePoint - value));
                         },
                     }
                 },

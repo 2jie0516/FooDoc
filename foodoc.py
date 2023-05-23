@@ -43,8 +43,8 @@ def join_process():
     if result[0] == 1:
         return render_template('join1.html',status = 1)
 
-    sql = "insert into user(name,user_id,pw) values(%s,%s,%s)"
-    curs.execute(sql, (name, user_id, pw))
+    sql = "insert into user(name,user_id,pw,phone,email) values(%s,%s,%s,%s,%s)"
+    curs.execute(sql, (name, user_id, pw,phone,email))
 
     db.commit();
 
@@ -60,26 +60,27 @@ def join_process_info():
     fitness = request.form.get('fitness')
     pregnant = request.form.get('pregnant')
     none = request.form.get('none')
-    print(high)
     model_youtube = keras.models.load_model("yotube_class/model_load.h5")
+
+
     if(none != 6) :
-        if(high == 1) :
+        if(high == '1') :
             a = 1
         else :
             a = 0
-        if (diabetes == 2):
+        if (diabetes == '2'):
             b = 1
         else:
             b = 0
-        if (obe == 3):
+        if (obe == '3'):
             c = 1
         else:
             c = 0
-        if (fitness == 4):
+        if (fitness == '4'):
             d = 1
         else:
             d = 0
-        if (pregnant == 5):
+        if (pregnant == '5'):
             e = 1
         else:
             e = 0
@@ -116,13 +117,15 @@ def join_process_info():
 def main():
     if 'user_id' in session:
         user_id = escape(session['user_id'])
-        sql_name = "select name,class_num,youtube_class from user where user_id= %s"
+        sql_name = "select user.name,class_num,youtube_class,(case when score is null then 0 else score end) from user " \
+                   "left join (select name,score from score " \
+                   "where month(date)= month(now()) and day(date) = day(now())) score on score.name = user.user_id where user_id= %s;"
         curs.execute(sql_name, str(user_id))
         row = curs.fetchone()
         user_name = row[0]
         class_num = row[1]
         youtube_class = row[2]
-
+        user_score = row[3]
         print(user_id)
 
         sql_kal_day1 = "SELECT sum(energy) as energy FROM eat_food " \
@@ -202,14 +205,16 @@ def main():
             kal_list[6] = kal_info_day7[0];
 
 
-        sql_food = "select (case when sum(energy) is null then 0 else sum(energy) end) AS energy,(case when sum(protein) is null then 0 else sum(protein) end) AS protein," \
-                   "(case when sum(water) is null then 0 else sum(water) end) AS water,(case when sum(tansu) is null then 0 else sum(tansu) end) AS tansu from eat_food " \
-                   "where user_id = %s and month(date) = month(now()) and day(date) = day(now());"
+        sql_food = "select (case when sum(water) is null then 0 else sum(water) end) AS water,(case when sum(protein) is null then 0 else sum(protein) end) AS protein, " \
+                   "(case when sum(water) is null then 0 else sum(water) end) AS water,(case when sum(tansu) is null then 0 else sum(tansu) end) AS tansu," \
+                   "(case when sum(vitaminA) is null then 0 else sum(vitaminA) end) AS vitaminA,(case when sum(vitaminB) is null then 0 else sum(vitaminB) end) AS vitaminB," \
+                   "(case when sum(vitaminC) is null then 0 else sum(vitaminC) end) AS vitaminC,(case when sum(vitaminD) is null then 0 else sum(vitaminD) end) AS vitaminD " \
+                   "from eat_food where user_id = %s and month(date) = month(now()) and day(date) = day(now());"
 
         curs.execute(sql_food, str(user_id))
         food_info = curs.fetchone()
 
-        sql_class = "select kcal,tansu,protein,water from class " \
+        sql_class = "select kcal,tansu,protein,water,vitaminA,vitaminB,vitaminC,vitaminD from class " \
                     "where class_num = %s"
 
         curs.execute(sql_class, class_num)
@@ -221,6 +226,7 @@ def main():
         curs.execute(sql_class, youtube_class)
         youtube_list = curs.fetchone()
         print(youtube_list[0])
+        print(youtube_list[1])
         date_list = [0 for i in range(7)]
 
 
@@ -233,8 +239,15 @@ def main():
         date_list[5] = (datetime.today() - timedelta(5)).strftime('%m/%d')
         date_list[6] = (datetime.today() - timedelta(6)).strftime('%m/%d')
 
+        sql_rank = "select name from score where month(date) = month(now()) and day(date) = day(now()- INTERVAL 1 DAY) order by score desc,name limit 3;"
 
-        return render_template('index.html', name=user_name ,food_info = food_info,kal_list = kal_list,class_result = class_result,date_list = date_list,youtube_list = youtube_list)
+
+        curs.execute(sql_rank)
+        rank_info = curs.fetchall()
+
+
+
+        return render_template('index.html', name=user_name,user_score = user_score,rank_info = rank_info ,food_info = food_info,kal_list = kal_list,class_result = class_result,date_list = date_list,youtube_list = youtube_list)
     else:
         return "로그인 해주세요 redirect(url_for('logIn'))"
 
@@ -358,26 +371,79 @@ def analyze():
     curs.execute(sql_food, str(user_id))
     food_info = curs.fetchone()
 
-    sql_class = "select kcal,tansu,protein,water from class " \
+    sql_class = "select kcal,tansu,protein,water,vitaminA,vitaminB,vitaminC,vitaminD from class " \
                 "where class_num = %s"
 
     curs.execute(sql_class, class_num)
     class_result = curs.fetchone()
 
     food_info_lack = {}
+    food_info_max = {}
 
-    if food_info[0] < class_result[0] :
-        food_info_lack["탄수화물"] = "식욕부진, 단기 기억력 감소, 근육 무력증, 심장 비대, 각기병, 만성변비, 신경 기능 저하, 지루성 피부염, 구순염, 두통"
+    sql = "select round(avg(food.energy)),round(avg(food.protein)),round(avg(food.water)),round(avg(food.tansu)),round(avg(food.vitaminA)),round(avg(food.vitaminB)),round(avg(food.vitaminC)),round(avg(food.vitaminD)) from user inner join (select " \
+          "sum(energy) AS energy,sum(protein) AS protein,sum(water) AS water,sum(tansu) AS tansu,sum(vitaminA) AS vitaminA,sum(vitaminB) AS vitaminB,sum(vitaminC) AS vitaminC,sum(vitaminD) AS vitaminD,user_id AS id from eat_food where user_id=%s " \
+          "and date <now()-7 group by day(date)) food on food.id = user.user_id where user.user_id=%s"
+
+    curs.execute(sql, (str(user_id), str(user_id)))
+    result = curs.fetchone()
+
+    if result[4] < class_result[4] :
+        food_info_lack["비타민A"] = "야맹증 , 안구 건조증"
+
+    elif result[4] > class_result[4] :
+        food_info_max["비타민A"] = "탈모 , 입술 갈라짐 , 두통"
+
+    if result[5] < class_result[5] :
+        food_info_lack["비타민B"] = "쇠약 , 피로 , 숨가쁨 , 현기증 , 신경 손상"
+
+    elif result[5] > class_result[5] :
+        food_info_max["비타민B"] = "울렁거림 , 두통 , 메스꺼움"
+
+    if result[6] < class_result[6] :
+        food_info_lack["비타민C"] = "피로감 , 쇠약감 , 과민감 , 괴혈병"
+
+    elif result[6] > class_result[6] :
+        food_info_max["비타민C"] = "삼투성 설사 , 위장 장애 , 오심 , 구토"
+
+    if result[7] < class_result[7] :
+        food_info_lack["비타민D"] = "성장 장애 , 구루병 , 골연화증"
+
+    elif result[7] > class_result[7] :
+        food_info_max["비타민D"] = "식욕 상실 , 메스꺼움 , 구토"
+
+    if result[3] < class_result[1] :
+        food_info_lack["탄수화물"] = "뇌 기능 저하, 피로감 "
+
+    elif result[3] > class_result[1] :
+        food_info_max["탄수화물"] = "지방간 , 고지혈증"
+
+    if result[1] < class_result[2] :
+        food_info_lack["단백질"] = "머리카락 얇아짐 , 피부 갈라짐 , 골격 약화"
+
+    elif result[1] > class_result[2] :
+        food_info_max["단백질"] = "소화 장애 , 신장 이상"
+
+    if result[2] < class_result[3] :
+        food_info_lack["수분"] = "소화 불량 , 가슴 쓰림"
+
+    elif result[2] > class_result[3] :
+        food_info_max["수분"] = "신장 기능 약화 , 저나트륨혈증 , 심부적증 약화  "
 
 
-    if food_info[1] < class_result[1] :
-        food_info_lack["탄수화물1"] = "식욕부진, 단기 기억력 감소, 근육 무력증, 심장 비대, 각기병, 만성변비, 신경 기능 저하, 지루성 피부염, 구순염, 두통"
+    food_idx = random.randrange(0,len(food_info_lack))
+    print(food_idx)
+    food_rack =list(food_info_lack.keys())
+    lack_food = food_rack[food_idx]
+    print(lack_food)
+    sql_food = "select food1_name , img1_path , food2_name , img2_path , food3_name , img3_path , food4_name , img4_path from food_load where nutrient = %s"
 
-    food_idx = random.randrange(1,len(food_info_lack)+1)
 
+    curs.execute(sql_food, lack_food)
+    food_load = curs.fetchone()
 
-
-    return render_template('analyze.html',food_lists=food_lists,idx = idx, kal_list = kal_list , date_list = date_list,class_result = class_result,food_info = food_info,food_info_lack = food_info_lack,food_idx = food_idx)
+    return render_template('analyze.html',result = result,food_lists=food_lists,idx = idx, kal_list = kal_list
+                           ,date_list = date_list,class_result = class_result,food_info = food_info,food_info_lack = food_info_lack
+                           ,food_info_max = food_info_max,food_idx = food_idx,lack_food = lack_food,food_load = food_load)
 
 @app.route('/pic_upload')
 def pic():
@@ -428,8 +494,8 @@ def upload():
     # yoloV5 메뉴얼에 있는 코드 , 정확히 뭘 하는지는 모름
     food_name = json_Object[0].get("name")
     #식품 이름 결과값을 저장
-
-    sql = "select food_name,energy,protein,fat,water,tansu,sugar from food where eng_name = %s"
+    print(food_name)
+    sql = "select food_name,energy,protein,fat,water,tansu,sugar,vitaminA,vitaminB,vitaminC,vitaminD from food where eng_name = %s"
     # 해당 식품에 맞는 영양소 정보를 DB에서 불러옴
     curs.execute(sql, food_name)
     rows = curs.fetchone()
@@ -443,38 +509,38 @@ def upload():
 
     if hour >= 5 and hour < 10:
         meal = '아침식사'
-        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], meal))
+        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,vitaminA,vitaminB,vitaminC,vitaminD,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6],rows[7],rows[8],rows[9],rows[10], meal))
 
         db.commit();
     elif hour >= 10 and hour < 11:
         meal = '간식'
-        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], meal))
+        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,vitaminA,vitaminB,vitaminC,vitaminD,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6],rows[7],rows[8],rows[9],rows[10], meal))
 
         db.commit();
     elif hour >= 11 and hour < 14:
         meal = '점심식사'
-        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], meal))
+        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,vitaminA,vitaminB,vitaminC,vitaminD,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6],rows[7],rows[8],rows[9],rows[10], meal))
 
         db.commit();
     elif hour >= 14 and hour < 17:
         meal = '간식'
-        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], meal))
+        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,vitaminA,vitaminB,vitaminC,vitaminD,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6],rows[7],rows[8],rows[9],rows[10], meal))
 
         db.commit();
     elif hour >= 17 and hour < 19:
         meal = '저녁식사'
-        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], meal))
+        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,vitaminA,vitaminB,vitaminC,vitaminD,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6],rows[7],rows[8],rows[9],rows[10], meal))
 
         db.commit();
     else:
         meal = '야식'
-        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6], meal))
+        sql = "insert into eat_food(user_id,food_name,energy,protein,fat,water,tansu,sugar,vitaminA,vitaminB,vitaminC,vitaminD,meal) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        curs.execute(sql, (str(user_id), rows[0], rows[1], rows[2], rows[3], rows[4], rows[5], rows[6],rows[7],rows[8],rows[9],rows[10], meal))
 
         db.commit();
 
@@ -490,22 +556,26 @@ def upload():
     curs.execute(sql_class, class_num[0])
     class_result = curs.fetchone()
 
-    health_score = ((class_result[0] - class_num[1]) / class_result[0] * 100 + (class_result[1] - class_num[4]) / class_result[1] * 100
-              + (class_result[2] - class_num[2]) / class_result[2] * 100 + (class_result[3] - class_num[3]) /class_result[3] * 100) / 4
+    health_score = ((((class_result[0] - class_num[1]) / class_result[0]) * 100) + (((class_result[1] - class_num[4]) / class_result[1]) * 100)
+              + (((class_result[2] - class_num[2]) / class_result[2]) * 100) + (((class_result[3] - class_num[3]) /class_result[3]) * 100)) / 4
+    print(health_score)
+    if health_score >= 100:
+        health_score = 100
+    if health_score <= 0:
+        health_score = 0
 
-    print(int(health_score))
 
-    sql_exist = "select exists(select count(name) from score where user_id=%s and month(date) = month(now()) and day(date) = day(now()));"
+    sql_exist = "select exists(select name from score where name=%s and month(date)= month(now()) and day(date) = day(now())) as exsits;"
     curs.execute(sql_exist, str(user_id))
     exist = curs.fetchone()
-
-    if exist == 1 :
+    print(exist)
+    if exist[0] == 0 :
         sql = "insert into score(name,score) values(%s,%s)"
         curs.execute(sql, (str(user_id), health_score))
 
         db.commit();
     else :
-        sql = "update score set score = %s where user_id= %s"
+        sql = "update score set score = %s where name= %s"
         curs.execute(sql, (health_score,str(user_id)))
 
         db.commit();
@@ -546,6 +616,9 @@ def logIn_process():
     if (request.form.get('pw') == result[1]):
         session['user_id'] = request.form.get('user_id')
         return redirect(url_for('main'))
+    else:
+        return render_template('logIn.html',status = 0)
+
 
 
 @app.route('/eat_list', methods=['GET'])
@@ -610,8 +683,77 @@ def recommend():
 
     return render_template('recommend.html',recommend_list = recommend_list)
 
+@app.route('/modify', methods=['GET'])
+def modify():
+    user_id = escape(session['user_id'])
+    sql = "select name,pw,phone,email from user where user_id = %s"
+    curs.execute(sql, str(user_id))
+    info = curs.fetchone()
+    return render_template('info_modify.html',info = info)
+
+@app.route('/modify_process', methods=['POST'])
+def modify_process():
+    user_id = escape(session['user_id'])
+
+    pw = request.form.get('pw')
+    name = request.form.get('name')
+    phone = request.form.get('phone')
+    email = request.form.get('email')
+    high = request.form.get('high')
+    diabetes = request.form.get('diabetes')
+    face = request.form.get('face')
+    fitness = request.form.get('fitness')
+    pregnant = request.form.get('pregnant')
+    none = request.form.get('none')
+    model_youtube = keras.models.load_model("yotube_class/model_load.h5")
 
 
+
+
+    print(pregnant)
+    print(diabetes)
+    print(high)
+    print(face)
+    print(fitness)
+
+    if (none != 1):
+        if (pregnant == None):
+            a = 1
+        else:
+            a = 0
+        if (diabetes == None):
+            b = 1
+        else:
+            b = 0
+        if (high == None):
+            c = 1
+        else:
+            c = 0
+        if (face == None):
+            d = 1
+        else:
+            d = 0
+        if (fitness == None):
+            e = 1
+        else:
+            e = 0
+        abcde = np.array([[a, b, c, d, e]])
+
+        output = model_youtube.predict(abcde)
+
+        for i in range(len(output[0])):
+            if (np.max(output) == output[0][i]).all():
+                result_youtube = i
+    else:
+        result_youtube = 0
+    print(abcde)
+    print(result_youtube)
+    user_id = escape(session['user_id'])
+
+    sql = "update user set name=%s,phone=%s,email=%s,pw=%s,youtube_class=%s where user_id = %s"
+    curs.execute(sql, (name,phone,email,pw,result_youtube,str(user_id)))
+    db.commit();
+    return redirect(url_for('main'))
 @app.route('/')
 def logIn():
     return render_template('Login.html')

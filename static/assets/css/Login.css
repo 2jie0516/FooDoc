@@ -108,6 +108,18 @@ header {
     font-size: 1.2em;
     letter-spacing: 2px;
 }
+#join {
+
+    width: 40%;
+    height: 20px;
+    border: 0;
+    outline: none;
+    border-radius: 5px;
+    background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+    color: white;
+    font-size: 0.8em;
+    letter-spacing: 2px;
+}
 footer {
     width: 100%;    /* 너비 */
     height: 110px;  /* 높이 */

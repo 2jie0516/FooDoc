@@ -98,3 +98,14 @@ input[type="radio"]:checked + label span {
     border: 1px solid lightgray;
     outline: none;
 }
+#modify {
+    width: 40%;
+    height: 40px;
+    border: 0;
+    outline: none;
+    border-radius: 5px;
+    background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+    color: white;
+    font-size: 0.8em;
+    letter-spacing: 2px;
+}

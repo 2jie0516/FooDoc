@@ -111,3 +111,12 @@ input[type="radio"]:checked + label span {
 h5 {
     color: gray;
 }
+#age {
+    width: 35%;
+    height: 35px;
+    border-radius: 30px;
+    margin-top: 10px;
+    padding: 0px 20px;
+    border: 1px solid lightgray;
+    outline: none;
+}

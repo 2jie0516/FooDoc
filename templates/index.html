@@ -51,7 +51,7 @@
                     <h4>개인정보 관리</h4>
                 </li>
                 <li>
-                    <span><a href="info_modify.html">개인정보 변경</a></span>
+                    <span><a href="/modify">개인정보 변경</a></span>
                 </li>
             </ul>
         </nav>
@@ -59,21 +59,21 @@
         <main>
             <div class="summary">
                 <div class="summary-total">
-                    <span>{{ name }}님의 건강 점수 <em class="highlight color-green">00점</em></span>
+                    <span>{{ name }}님의 건강 점수 <em class="highlight color-green">{{ user_score }}점</em></span>
                 </div>
                 <div class="summary-lank">
                     <ul>
                         <li>
                             <span>1위</span>
-                            <span>홍길동</span>
+                            <span>{{ rank_info[0][0] }}</span>
                         </li>
                         <li>
                             <span>2위</span>
-                            <span>홍길동</span>
+                            <span>{{ rank_info[1][0] }}</span>
                         </li>
                         <li>
                             <span>3위</span>
-                            <span>홍길동</span>
+                            <span>{{ rank_info[2][0] }}</span>
                         </li>
                     </ul>
                 </div>
@@ -147,9 +147,6 @@
         const ctx1 = document.getElementById('chart_01');
         const ctx2 = document.getElementById('chart_02');
         const basePoint = {{ class_result[0] }};
-        const basePoint_tansu = {{ class_result[1] }};
-        const basePoint_protein = {{ class_result[2] }};
-        const basePoint_fat = {{ class_result[3] }};
 
         new Chart(ctx1, {
             type: 'bar',
@@ -157,8 +154,8 @@
                 labels: ['{{ date_list[6] }}', '{{ date_list[5] }}', '{{ date_list[4] }}', '{{ date_list[3] }}', '{{ date_list[2] }}', '{{ date_list[1] }}', '{{ date_list[0] }}'],
                 datasets: [{
                     label: false,
-
-                    data: [{{ kal_list[6] }}, {{ kal_list[5] }}, {{ kal_list[4] }}, {{ kal_list[3] }}, {{ kal_list[2] }}, {{ kal_list[1] }}, {{ kal_list[0] }}],
+                    data: [2000, 2100, 1900, 2300, 2500, 1700, 1900+{{ kal_list[0] }}],
+                    // data: [{{ kal_list[6] }}, {{ kal_list[5] }}, {{ kal_list[4] }}, {{ kal_list[3] }}, {{ kal_list[2] }}, {{ kal_list[1] }}, {{ kal_list[0] }}],
                     backgroundColor: ['#77933C'],
                 }]
             },
@@ -210,7 +207,7 @@
                             var value = context.dataset.data[context.dataIndex];
                             var glyph = value > basePoint ? "▲" : value < basePoint ? "▼" : "■";
 
-                            return glyph + " " + Math.round(basePoint - value);
+                            return glyph + " " + Math.abs(Math.round(basePoint - value));
                         },
                     }
                 },
@@ -240,10 +237,11 @@
         new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ['비타민A', '비타민B', '비타민C', '비타민D', '탄수화물', '단백질', '지방'],
+                labels: ['비타민A', '비타민B', '비타민C', '비타민D', '탄수화물', '단백질', '수분'],
                 datasets: [{
                     label: false,
-                    data: [80, 66, 45, 30, {{food_info[1]}}, {{food_info[2]}} , {{food_info[3]}}],
+                    data: [600, 70, 100, 15, 150,60,500],
+                    // data: [{{food_info[4]}}, {{food_info[5]}}, {{food_info[6]}}, {{food_info[7]}}, {{food_info[3]}}, {{food_info[1]}} , {{food_info[0]}}],
                     backgroundColor: ['#77933C'],
                 }]
             },
@@ -265,7 +263,7 @@
                         },
                         beginAtZero: true,
                         min: 0,
-                        max: 500,
+                        max: 1000,
                     }
                 },
                 
@@ -277,34 +275,34 @@
                         anchor: "end",
                         align: "top",
                         color: function(context) {
-                            var value = context.dataset.data[context.dataIndex];
-
-                            if(context.dataIndex == 0){
-                                var basePoint = 150;
-                            }
-
-                            else if(context.dataIndex == 1){
-                                var basePoint = 200;
-                            }
-                            else if(context.dataIndex == 2){
-                                var basePoint = 250;
-                            }
-                            else if(context.dataIndex == 3){
-                                var basePoint = 300;
-                            }
-                            else if(context.dataIndex == 4){
-                                var basePoint = 100;
-                            }
-                            else if(context.dataIndex == 5){
-                                var basePoint = 200;
-                            }
-                            else if(context.dataIndex == 6){
-                                var basePoint = 200;
-                            }
-                            console.log(basePoint);
+                            // var value = context.dataset.data[context.dataIndex];
+                            //
+                            // if(context.dataIndex == 0){
+                            //     basePoint_nuterient = {{ class_result[5] }};
+                            // }
+                            // else if(context.dataIndex == 1){
+                            //     basePoint_nuterient = {{ class_result[6] }};
+                            // }
+                            // else if(context.dataIndex == 2){
+                            //     basePoint_nuterient = {{ class_result[7] }};
+                            // }
+                            // else if(context.dataIndex == 3){
+                            //     basePoint_nuterient = {{ class_result[1] }};
+                            // }
+                            // else if(context.dataIndex == 4){
+                            //     basePoint_nuterient = {{ class_result[2] }};
+                            // }
+                            // else if(context.dataIndex == 5){
+                            //     basePoint_nuterient = {{ class_result[3] }};
+                            // }
+                            // else if(context.dataIndex == 6){
+                            //     basePoint_nuterient = {{ class_result[3] }};
+                            // }
+                            // console.log("----");
+                            // console.log(value);
                             return (
-                                value < basePoint ? "#ff0000" : 
-                                value > basePoint ? "#0054FF" : 
+                                // value < basePoint_nuterient ? "#ff0000" :
+                                // value > basePoint_nuterient ? "#0054FF" :
                                 "#028f00"
                             );
                         },
@@ -313,12 +311,14 @@
                             weight: "bold",
                         },
                         offset: 2,
-                        formatter: function(value, context) {
-                            var value = context.dataset.data[context.dataIndex];
-                            var glyph = value < basePoint ? "▲" : value > basePoint ? "▼" : "■";
-
-                            return glyph + " " + Math.round(value);
-                        },
+                        // formatter: function(value, context) {
+                        //
+                        //     var value = context.dataset.data[context.dataIndex];
+                        //     var glyph = value > basePoint_nuterient ? "▲" : value < basePoint_nuterient ? "▼" : "■";
+                        //     console.log(value);
+                        //     console.log("----");
+                        //     return glyph + " " + Math.abs(Math.round(basePoint_nuterient - value));
+                        // },
                     }
                 },
 
