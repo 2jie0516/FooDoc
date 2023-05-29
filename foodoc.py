@@ -36,18 +36,19 @@ def join_process():
     name = request.form.get('name')
     phone = request.form.get('phone')
     email = request.form.get('email')
+    # 폼에서 데이터를 가져옴
 
     sql_check = "select exists(select user_id from user where user_id=%s);"
     curs.execute(sql_check, user_id)
     result = curs.fetchone()
     if result[0] == 1:
         return render_template('join1.html',status = 1)
-
+    # 이미 존재하는 아이디라면 오류 페이지 출력
     sql = "insert into user(name,user_id,pw,phone,email) values(%s,%s,%s,%s,%s)"
     curs.execute(sql, (name, user_id, pw,phone,email))
 
     db.commit();
-
+    # user 테이블에 insert
     return render_template('join2.html')
 
 @app.route('/join_process2', methods=['POST'])
@@ -61,7 +62,7 @@ def join_process_info():
     pregnant = request.form.get('pregnant')
     none = request.form.get('none')
     model_youtube = keras.models.load_model("yotube_class/model_load.h5")
-
+    # 폼에서 데이터를 가져옴
 
     if(none != 6) :
         if(high == '1') :
@@ -85,6 +86,7 @@ def join_process_info():
         else:
             e = 0
         abcde = np.array([[a, b, c, d, e]])
+        # 관심사 선택 사항을 array로 변환
 
         output = model_youtube.predict(abcde)
 
@@ -93,7 +95,7 @@ def join_process_info():
                 result_youtube = i
     else :
         result_youtube = 0
-
+    # 유튜브 추천 클래스 반환
     model = keras.models.load_model("class_model/model_load.h5")
     xt = np.array([[float(age), float(gender)]])
     output = model.predict(xt)
@@ -101,12 +103,12 @@ def join_process_info():
         if (np.max(output) == output[0][i]).all():
             result_class = i
             # 모델을 불러와서 나이 성별에 맞는 클래스를 불어와서 DB에 저장
-
+            # 권장 섭취량 클래스 반환
     curs.execute("SELECT LAST_INSERT_ID() AS reviewIdx");
     idx = curs.fetchone()
     sql = "update user set age=%s,gender=%s,class_num=%s,youtube_class=%s where id=%s;"
     curs.execute(sql, (age,gender,result_class,result_youtube,idx))
-
+    # 앞에 추가 했던 회원 정보에 부가 정보 추가
     db.commit();
 
     return redirect(url_for('logIn'))
@@ -126,7 +128,9 @@ def main():
         class_num = row[1]
         youtube_class = row[2]
         user_score = row[3]
-        print(user_id)
+
+        # 메인페이지에 출력할 기본 정보들을 가져옴 (유저 정보 , 권장 섭취량 , 유튜브 추천 클래스)
+
 
         sql_kal_day1 = "SELECT sum(energy) as energy FROM eat_food " \
                        "WHERE month(date) = month(now()) AND day(date) = day(now())  AND user_id = %s group by day(date);"
@@ -149,6 +153,7 @@ def main():
         sql_kal_day7 = "SELECT sum(energy) as energy FROM eat_food " \
                        "WHERE month(date) = month(now()) AND day(date) = day(now())-6  AND user_id = %s group by day(date);"
 
+        # 일주일 간의 칼로리 섭취량을 DB에서 가져옴
 
         curs.execute(sql_kal_day1,str(user_id))
         kal_info_day1 = curs.fetchone()
@@ -171,7 +176,7 @@ def main():
         curs.execute(sql_kal_day7, str(user_id))
         kal_info_day7 = curs.fetchone()
 
-
+        # 일주일 간의 열량 섭취량을 가져옴
 
         kal_list = [0 for i in range(7)]
 
@@ -204,6 +209,7 @@ def main():
         else:
             kal_list[6] = kal_info_day7[0];
 
+        # 일주일 간의 칼로리 섭취량을 가져와서 배열에 넣음
 
         sql_food = "select (case when sum(water) is null then 0 else sum(water) end) AS water,(case when sum(protein) is null then 0 else sum(protein) end) AS protein, " \
                    "(case when sum(water) is null then 0 else sum(water) end) AS water,(case when sum(tansu) is null then 0 else sum(tansu) end) AS tansu," \
@@ -220,13 +226,16 @@ def main():
         curs.execute(sql_class, class_num)
         class_result = curs.fetchone()
 
+        # 금일 영양소 섭취량을 가져옴
+
         sql_class = "select video1,video2,video3,video4,video5 from youtube_list " \
                     "where class_id = %s"
 
         curs.execute(sql_class, youtube_class)
         youtube_list = curs.fetchone()
-        print(youtube_list[0])
-        print(youtube_list[1])
+
+        # 추천 동영상 링크들을 가져옴
+
         date_list = [0 for i in range(7)]
 
 
@@ -245,7 +254,7 @@ def main():
         curs.execute(sql_rank)
         rank_info = curs.fetchall()
 
-
+        # 랭킹 순위를 가져옴
 
         return render_template('index.html', name=user_name,user_score = user_score,rank_info = rank_info ,food_info = food_info,kal_list = kal_list,class_result = class_result,date_list = date_list,youtube_list = youtube_list)
     else:
@@ -256,6 +265,7 @@ def analyze():
     user_id = escape(session['user_id'])
     page = request.args.get('page', type=int, default=1)
 
+    # 세션에서 유저 id 추출
 
     sql_all = "select count(food_name) as date from eat_food where user_id=%s order by date desc;"
 
@@ -265,12 +275,16 @@ def analyze():
 
     idx = int(ceil(idx[0] / 6))
 
+    # 페이지 수를 계산함 (전체 게시글 / 6)
+
     if page != 1:
         page = (page-1) * 6;
     else :
         page = 0
     sql_food = "select food_name,concat(tansu,\"/\",protein,\"/\",fat),date_format(date,'%%Y-%%m-%%d') as date from eat_food where user_id= %s " \
                "order by date desc limit 6 offset %s;"
+
+    # 페이징 sql
 
     curs.execute(sql_food, (str(user_id),page))
 
@@ -280,6 +294,7 @@ def analyze():
     curs.execute(sql_name, str(user_id))
     row = curs.fetchone()
     class_num = row[0]
+    # 클래스 정보를 가져옴
 
     sql_kal_day1 = "SELECT sum(energy) as energy FROM eat_food " \
                    "WHERE month(date) = month(now()) AND day(date) = day(now())  AND user_id = %s group by day(date);"
@@ -354,6 +369,8 @@ def analyze():
     else:
         kal_list[6] = kal_info_day7[0];
 
+    # 일주일 간 칼로리 정보들을 배열에 넣음
+
     date_list = [0 for i in range(7)]
 
     date_list[0] = datetime.today().strftime('%m/%d')
@@ -364,6 +381,8 @@ def analyze():
     date_list[5] = (datetime.today() - timedelta(5)).strftime('%m/%d')
     date_list[6] = (datetime.today() - timedelta(6)).strftime('%m/%d')
 
+    # 날짜 배열을 생성함
+
     sql_food = "select (case when sum(energy) is null then 0 else sum(energy) end) AS energy,(case when sum(protein) is null then 0 else sum(protein) end) AS protein," \
                "(case when sum(water) is null then 0 else sum(water) end) AS water,(case when sum(tansu) is null then 0 else sum(tansu) end) AS tansu from eat_food " \
                "where user_id = %s and month(date) = month(now()) and day(date) = day(now());"
@@ -371,14 +390,21 @@ def analyze():
     curs.execute(sql_food, str(user_id))
     food_info = curs.fetchone()
 
+    # 섭취 영양소 총량 정보를 가져옴
+
     sql_class = "select kcal,tansu,protein,water,vitaminA,vitaminB,vitaminC,vitaminD from class " \
                 "where class_num = %s"
 
     curs.execute(sql_class, class_num)
     class_result = curs.fetchone()
 
+    # 권장 섭취량 정보를 가져옴
+
     food_info_lack = {}
+    # 부족 영양소
     food_info_max = {}
+    # 과잉 영양소
+
 
     sql = "select round(avg(food.energy)),round(avg(food.protein)),round(avg(food.water)),round(avg(food.tansu)),round(avg(food.vitaminA)),round(avg(food.vitaminB)),round(avg(food.vitaminC)),round(avg(food.vitaminD)) from user inner join (select " \
           "sum(energy) AS energy,sum(protein) AS protein,sum(water) AS water,sum(tansu) AS tansu,sum(vitaminA) AS vitaminA,sum(vitaminB) AS vitaminB,sum(vitaminC) AS vitaminC,sum(vitaminD) AS vitaminD,user_id AS id from eat_food where user_id=%s " \
@@ -427,16 +453,17 @@ def analyze():
         food_info_lack["수분"] = "소화 불량 , 가슴 쓰림"
 
     elif result[2] > class_result[3] :
-        food_info_max["수분"] = "신장 기능 약화 , 저나트륨혈증 , 심부적증 약화  "
+        food_info_max["수분"] = "신장 기능 약화 , 저나트륨혈증 , 심부적증 약화"
 
+    # 부족 영양소와 과잉 영양소 질병 정보를 삽입
 
     food_idx = random.randrange(0,len(food_info_lack))
-    print(food_idx)
     food_rack =list(food_info_lack.keys())
     lack_food = food_rack[food_idx]
-    print(lack_food)
-    sql_food = "select food1_name , img1_path , food2_name , img2_path , food3_name , img3_path , food4_name , img4_path from food_load where nutrient = %s"
+    # 부족 영양소 중에서 아무거나 하나 가져옴
 
+    sql_food = "select food1_name , img1_path , food2_name , img2_path , food3_name , img3_path , food4_name , img4_path from food_load where nutrient = %s"
+    # 부족 영양소 보충 식단 sql문
 
     curs.execute(sql_food, lack_food)
     food_load = curs.fetchone()
@@ -550,11 +577,15 @@ def upload():
     curs.execute(sql_class, str(user_id))
     class_num = curs.fetchone()
 
+    # 시간에 따라 식사 종류를 구분에서 유저 정보에 삽입
+
     sql_class = "select kcal,tansu,protein,water from class " \
                     "where class_num = %s"
 
     curs.execute(sql_class, class_num[0])
     class_result = curs.fetchone()
+
+    # 권장 섭취량 정보를 가져옴
 
     health_score = ((((class_result[0] - class_num[1]) / class_result[0]) * 100) + (((class_result[1] - class_num[4]) / class_result[1]) * 100)
               + (((class_result[2] - class_num[2]) / class_result[2]) * 100) + (((class_result[3] - class_num[3]) /class_result[3]) * 100)) / 4
@@ -564,11 +595,12 @@ def upload():
     if health_score <= 0:
         health_score = 0
 
+    # 건강 점수를 계산
 
     sql_exist = "select exists(select name from score where name=%s and month(date)= month(now()) and day(date) = day(now())) as exsits;"
     curs.execute(sql_exist, str(user_id))
     exist = curs.fetchone()
-    print(exist)
+
     if exist[0] == 0 :
         sql = "insert into score(name,score) values(%s,%s)"
         curs.execute(sql, (str(user_id), health_score))
@@ -580,24 +612,10 @@ def upload():
 
         db.commit();
 
+    # 건강 점수가 없다면 새로 계산 , 없다면 기존 점수 수정
 
     return redirect(url_for('main'))
-#
-# #회원가입,이거 지금 안씀
-# @app.route('/class', methods=['POST'])
-# def join():
-#     name = request.form.get('name')
-#     age = float(request.form.get('age'))
-#     sex = float(request.form.get('sex'))
-#     model = keras.models.load_model("class_model/model_load.h5")
-#     xt = np.array([[age, sex]])
-#     output = model.predict(xt)
-#
-#     for i in range(len(output[0])):
-#         if (np.max(output) == output[0][i]).all():
-#             result = i
-#
-#     return render_template('test_index.html', name=name, result=result)
+
 
 
 @app.route('/join')
@@ -616,77 +634,17 @@ def logIn_process():
     if (request.form.get('pw') == result[1]):
         session['user_id'] = request.form.get('user_id')
         return redirect(url_for('main'))
+        # 로그인 정보를 가져오고 패스워드 일치 확인
     else:
         return render_template('logIn.html',status = 0)
 
 
 
-@app.route('/eat_list', methods=['GET'])
-def eat_list():
-    user_id = escape(session['user_id'])
-    sql = "select meal,food_name,energy,protein,fat,water,tansu,sugar,date,time(date) from eat_food " \
-          "where user_id = %s and year(date) = year(CURRENT_TIMESTAMP) and month(date) = month(CURRENT_TIMESTAMP) " \
-          "and day(date) = day(CURRENT_TIMESTAMP)"
-
-    curs.execute(sql, str(user_id))
-    result = curs.fetchall()
-    return render_template('user_food_list.html', food_list=result)
-
-#하루 영양소 계산
-@app.route('/cal', methods=['GET'])
-def cal():
-    user_id = escape(session['user_id'])
-    sql = "select sum(energy) as energy,sum(protein) as protein,sum(water) as water,sum(tansu) as tansu,max(class_num) from eat_food " \
-          "left join user on user.user_id = eat_food.user_id " \
-          "where eat_food.user_id = %s and year(date) = year(CURRENT_TIMESTAMP) and month(date) = month(CURRENT_TIMESTAMP) " \
-          "and day(date) = day(CURRENT_TIMESTAMP)"
-
-    curs.execute(sql, str(user_id))
-    result = curs.fetchone()
-    print(result[0])
-    print(result[1])
-    print(result[2])
-    print(result[3])
-
-    class_num = result[4]
-
-    sql_class = "select kcal,protein,water,tansu from class " \
-                "where class_num = %s"
-    curs.execute(sql_class,class_num)
-    standard = curs.fetchone();#유저 클래스에 맞는 권장 영양소를 불러옴
-
-    return render_template('health_cal.html', health_list=result, standard=standard)
-
-#식단 추천
-@app.route('/recommend', methods=['GET'])
-def recommend():
-    user_id = escape(session['user_id'])
-    sql = "select avg(food.energy),avg(food.protein),avg(food.water),avg(food.tansu),max(class_num) from user inner join (select " \
-          "sum(energy) AS energy,sum(protein) AS protein,sum(water) AS water,sum(tansu) AS tansu,user_id AS id from eat_food where user_id=%s " \
-          "and date <now()-7 group by day(date)) food on food.id = user.user_id where user.user_id=%s"
-
-
-    curs.execute(sql, (str(user_id), str(user_id)))
-    result = curs.fetchone()
-    class_num = result[4]
-
-    sql_class = "select kcal,protein,water,tansu from class " \
-                "where class_num = %s"
-
-    curs.execute(sql_class, class_num)
-    standard = curs.fetchone();
-    recommend_list = []
-    for i in range(4):
-        if(standard[i] - result[i] > 0):
-            recommend_list.append(i)
-
-
-    return render_template('recommend.html',recommend_list = recommend_list)
-
 @app.route('/modify', methods=['GET'])
 def modify():
     user_id = escape(session['user_id'])
     sql = "select name,pw,phone,email from user where user_id = %s"
+    # 회원 정보들을 가져옴 (이름, 폰번호 , 이메일 등등 ...)
     curs.execute(sql, str(user_id))
     info = curs.fetchone()
     return render_template('info_modify.html',info = info)
@@ -707,14 +665,7 @@ def modify_process():
     none = request.form.get('none')
     model_youtube = keras.models.load_model("yotube_class/model_load.h5")
 
-
-
-
-    print(pregnant)
-    print(diabetes)
-    print(high)
-    print(face)
-    print(fitness)
+    # 수정 정보들을 가져옴 (유저가 수정 페이지에서 적은 이름이나 비밀번호 , 관심사 선택사항)
 
     if (none != 1):
         if (pregnant == None):
@@ -746,13 +697,19 @@ def modify_process():
                 result_youtube = i
     else:
         result_youtube = 0
-    print(abcde)
-    print(result_youtube)
+
+    # 유튜브 관심 클래스 분류 (텐서플로우 코드)
+
     user_id = escape(session['user_id'])
+
+    # 세션에서 유저 id 가져옴
 
     sql = "update user set name=%s,phone=%s,email=%s,pw=%s,youtube_class=%s where user_id = %s"
     curs.execute(sql, (name,phone,email,pw,result_youtube,str(user_id)))
     db.commit();
+
+    # 수정 사항 유저 정보에 삽입
+
     return redirect(url_for('main'))
 @app.route('/')
 def logIn():
