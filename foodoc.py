@@ -509,7 +509,8 @@ def upload():
     img_src = url_for('static', filename='uploads/' + filename)
 
     model = torch.hub.load('ultralytics/yolov5', 'custom',
-                           path='/home/osh/Downloads/FooDoc-main(1)/FooDoc-main/FOOD5_best7.pt', force_reload=True,
+                           path='/home/osh/Downloads/FooDoc-main(1)/FooDoc-main/FOOD5_best7.pt'
+                           , force_reload=True,
                            skip_validation=True)
     #커스텀 모델을 불러옴
 
@@ -589,7 +590,7 @@ def upload():
 
     health_score = ((((class_result[0] - class_num[1]) / class_result[0]) * 100) + (((class_result[1] - class_num[4]) / class_result[1]) * 100)
               + (((class_result[2] - class_num[2]) / class_result[2]) * 100) + (((class_result[3] - class_num[3]) /class_result[3]) * 100)) / 4
-    print(health_score)
+
     if health_score >= 100:
         health_score = 100
     if health_score <= 0:

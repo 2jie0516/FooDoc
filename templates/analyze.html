@@ -84,6 +84,7 @@
                                     <td>{{ food_list[1] }}</td>
                                 </tr>
                             {% endfor %}
+                            <!-- 과거 식단 조회 (food_list 배열에는 식단 정보 , 영양소 정보가 들어있음)-->
                             </tbody>
                         </table>
                         <div class="table-pagination">
@@ -95,6 +96,7 @@
                                 <li><span><a href="{{ url_for('analyze', page = i+1) }}">{{ i+1 }}</a></span></li>
 
                                 {% endfor %}
+                                <!-- 페이징 처리 , 페이지 인덱스만큼 정보 출력-->
                             </ul>
                             <span class="pagi-nav pagi-nav-right"><a><img src="../static/assets/img/chevron-right-regular-24.png" alt=""></a></span>
                         </div>

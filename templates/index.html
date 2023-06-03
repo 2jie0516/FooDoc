@@ -60,6 +60,7 @@
             <div class="summary">
                 <div class="summary-total">
                     <span>{{ name }}님의 건강 점수 <em class="highlight color-green">{{ user_score }}점</em></span>
+                    <!-- 유저 이름과 건강점수 표시 "{{ 변수 }} 구조"-->
                 </div>
                 <div class="summary-lank">
                     <ul>
@@ -75,6 +76,7 @@
                             <span>3위</span>
                             <span>{{ rank_info[2][0] }}</span>
                         </li>
+                        <!--순위 출력 rank_info 배열에는 순위 정보가 있음-->
                     </ul>
                 </div>
             </div>
@@ -129,6 +131,7 @@
                             <div class="slide-item">
                                 <iframe src={{youtube_list[4]}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                             </div>
+                            <!--유튜브 추천 동영상 목록을 출력함-->
                         </div>
                     </div>
                 </div>
@@ -154,8 +157,7 @@
                 labels: ['{{ date_list[6] }}', '{{ date_list[5] }}', '{{ date_list[4] }}', '{{ date_list[3] }}', '{{ date_list[2] }}', '{{ date_list[1] }}', '{{ date_list[0] }}'],
                 datasets: [{
                     label: false,
-                    data: [2000, 2100, 1900, 2300, 2500, 1700, 1900+{{ kal_list[0] }}],
-                    // data: [{{ kal_list[6] }}, {{ kal_list[5] }}, {{ kal_list[4] }}, {{ kal_list[3] }}, {{ kal_list[2] }}, {{ kal_list[1] }}, {{ kal_list[0] }}],
+                    data: [{{ kal_list[6] }}, {{ kal_list[5] }}, {{ kal_list[4] }}, {{ kal_list[3] }}, {{ kal_list[2] }}, {{ kal_list[1] }}, {{ kal_list[0] }}],
                     backgroundColor: ['#77933C'],
                 }]
             },

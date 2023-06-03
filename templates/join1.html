@@ -27,6 +27,7 @@
                     <form method="post" action="/join_process1" enctype="multipart/form-data">
                     <div class="title"><h1>계정 만들기</h1></div>
                     {% if status == 1 %}
+                    <!--중복 된 아이디면 오류 메세지 띄움-->
                     <div style="color: red">이미 존재하는 아이디입니다.</div>
                     {% endif %}
                     <br>
